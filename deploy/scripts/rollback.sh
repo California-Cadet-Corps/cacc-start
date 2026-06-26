@@ -43,9 +43,12 @@ echo ">> Rolling back: ${CURRENT}  ->  ${TARGET}"
 ln -sfn "${RELEASES}/${TARGET}" "${BASE}/current"
 sudo systemctl restart "${APP_NAME}"
 
-# Verify health.
+# Verify health. Read the port from shared/.env (the source of truth), matching
+# the deploy workflow, so this keeps working if the app port ever changes.
+APP_PORT="$(grep -E '^PORT=' "${BASE}/shared/.env" 2>/dev/null | head -1 | cut -d= -f2)"
+APP_PORT="${APP_PORT:-3000}"
 for i in $(seq 1 10); do
-  if curl -fsS http://127.0.0.1:3000/healthz >/dev/null; then
+  if curl -fsS --max-time 5 "http://127.0.0.1:${APP_PORT}/healthz" >/dev/null; then
     echo ">> Rollback OK — ${TARGET} is live and healthy."
     exit 0
   fi

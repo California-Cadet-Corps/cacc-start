@@ -48,10 +48,18 @@ jobs:
           HOST: ${{ secrets.LINODE_HOST }}
           PORT: ${{ secrets.LINODE_PORT || '22' }}
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
           printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          # Capture the server's host key. Do NOT swallow errors: if this comes
+          # back empty, every later ssh/rsync would block forever on the
+          # interactive "yes/no" host-key prompt. Fail loudly instead.
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          if ! grep -q . ~/.ssh/known_hosts; then
+            echo "ssh-keyscan captured no host key for $HOST:$PORT — aborting." >&2
+            exit 1
+          fi
 
       - name: Upload release to server
         env:
@@ -62,10 +70,18 @@ jobs:
           RELEASE: ${{ github.sha }}
         run: |
           set -euo pipefail
-          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
+          # Non-interactive, time-bounded SSH. BatchMode makes a failed auth
+          # error out instead of prompting (and hanging) for a password;
+          # ConnectTimeout bounds the handshake; ServerAlive* drops a silently
+          # dead connection mid-transfer instead of waiting indefinitely.
+          SSH_OPTS="-i $HOME/.ssh/deploy_key -p $PORT \
+            -o BatchMode=yes -o ConnectTimeout=15 \
+            -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
+            -o StrictHostKeyChecking=accept-new"
+          ssh $SSH_OPTS "$USER@$HOST" \
             "mkdir -p '$BASE/releases/$RELEASE' '$BASE/shared'"
           rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p $PORT" \
+            -e "ssh $SSH_OPTS" \
             --exclude='.git' --exclude='.github' --exclude='node_modules' \
             --exclude='.env' --exclude='deploy/' \
             ./ "$USER@$HOST:$BASE/releases/$RELEASE/"
@@ -79,7 +95,11 @@ jobs:
           RELEASE: ${{ github.sha }}
         run: |
           set -euo pipefail
-          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
+          SSH_OPTS="-i $HOME/.ssh/deploy_key -p $PORT \
+            -o BatchMode=yes -o ConnectTimeout=15 \
+            -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
+            -o StrictHostKeyChecking=accept-new"
+          ssh $SSH_OPTS "$USER@$HOST" \
             "RELEASE='$RELEASE' BASE='$BASE' bash -s" <<'REMOTE'
           set -euo pipefail
           RELEASE_DIR="$BASE/releases/$RELEASE"
@@ -115,13 +135,17 @@ jobs:
           # Poll the local health endpoint on the server; fail the job if unhealthy.
           # The app port is read from shared/.env (the source of truth) so it is
           # never hardcoded here.
-          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
+          SSH_OPTS="-i $HOME/.ssh/deploy_key -p $PORT \
+            -o BatchMode=yes -o ConnectTimeout=15 \
+            -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
+            -o StrictHostKeyChecking=accept-new"
+          ssh $SSH_OPTS "$USER@$HOST" \
             "BASE='$BASE' bash -s" <<'REMOTE'
           set -euo pipefail
           APP_PORT="$(grep -E '^PORT=' "$BASE/shared/.env" | head -1 | cut -d= -f2)"
           APP_PORT="${APP_PORT:-3000}"
           for i in $(seq 1 10); do
-            if curl -fsS "http://127.0.0.1:${APP_PORT}/healthz" >/dev/null; then
+            if curl -fsS --max-time 5 "http://127.0.0.1:${APP_PORT}/healthz" >/dev/null; then
               echo "Health check passed on port ${APP_PORT}"; exit 0
             fi
             sleep 3
