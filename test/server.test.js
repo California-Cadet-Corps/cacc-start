@@ -127,3 +127,21 @@ test('GET / contains ribbon <img> elements sourced from /ribbons/', async () => 
   assert.match(text, /<img[^>]+src="\/ribbons\/[^"]+\.png"/, 'page must contain an <img> with a ribbons/ src');
   await new Promise((resolve) => server.close(resolve));
 });
+
+test('ribbon box layout: cards are flex columns with sized images and wrapping descriptions', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const [htmlRes, cssRes] = await Promise.all([
+    fetch(`http://localhost:${port}/`),
+    fetch(`http://localhost:${port}/styles.css`),
+  ]);
+  const html = await htmlRes.text();
+  const css = await cssRes.text();
+  assert.match(html, /class="ribbon-grid"/, 'page must contain a ribbon-grid container');
+  assert.match(html, /class="ribbon-card[^"]*"/, 'page must contain ribbon-card elements');
+  assert.match(html, /class="ribbon-img"/, 'page must contain ribbon-img elements');
+  assert.match(html, /class="ribbon-body"/, 'page must contain ribbon-body elements');
+  assert.match(css, /\.ribbon-card\s*\{[^}]*flex-direction\s*:\s*column/, 'ribbon-card must use flex-direction: column');
+  assert.match(css, /\.ribbon-img\s*\{[^}]*object-fit\s*:/, 'ribbon-img must use object-fit to constrain the image');
+  await new Promise((resolve) => server.close(resolve));
+});
