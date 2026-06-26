@@ -79,26 +79,31 @@
               <span class="strand-icon" aria-hidden="true">&#127942;</span>
               <h3>Leadership</h3>
               <p>Develop decision-making, command presence, and the ability to lead peers in high-stress situations.</p>
+              <button class="topic-btn" data-modal="leadership">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#127919;</span>
               <h3>Citizenship</h3>
               <p>Foster civic awareness, community service, and a sense of duty to California and the nation.</p>
+              <button class="topic-btn" data-modal="citizenship">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#128081;</span>
               <h3>Military Subjects</h3>
               <p>Learn drill &amp; ceremonies, land navigation, marksmanship safety, and military courtesies.</p>
+              <button class="topic-btn" data-modal="military-subjects">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#127939;</span>
               <h3>Healthy Living</h3>
               <p>Build physical fitness, nutrition habits, and mental resilience through PT and wellness programs.</p>
+              <button class="topic-btn" data-modal="healthy-living">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#128218;</span>
               <h3>Academics</h3>
               <p>Reinforce classroom skills — goal-setting, study habits, and academic achievement count toward advancement.</p>
+              <button class="topic-btn" data-modal="academics">Learn more</button>
             </article>
           </div>
         </div>
@@ -291,6 +296,7 @@
               <h3>Summer Encampment</h3>
               <p>The flagship annual event held at Camp San Luis Obispo. Two weeks of intensive training, leadership challenges, and corps-wide competition.</p>
               <span class="event-meta">~$150 &bull; Camp SLO</span>
+              <button class="topic-btn" data-modal="summer-encampment">Learn more</button>
             </article>
 
             <article class="event-card reveal">
@@ -298,6 +304,7 @@
               <h3>Drill Competition</h3>
               <p>Units compete in armed and unarmed drill, color guard, and individual events before a panel of military judges.</p>
               <span class="event-meta">Regional &bull; Statewide</span>
+              <button class="topic-btn" data-modal="drill-competition">Learn more</button>
             </article>
 
             <article class="event-card reveal">
@@ -305,6 +312,7 @@
               <h3>Grizzly Adventure / Summer Camp</h3>
               <p>An outdoor adventure camp focused on team challenges, high-ropes courses, and wilderness survival.</p>
               <span class="event-meta">Summer</span>
+              <button class="topic-btn" data-modal="grizzly-adventure">Learn more</button>
             </article>
 
             <article class="event-card reveal">
@@ -312,6 +320,7 @@
               <h3>Wilderness &amp; Survival Training</h3>
               <p>Multi-day field training in land navigation, bivouac, shelter building, and backcountry skills.</p>
               <span class="event-meta">Field Training</span>
+              <button class="topic-btn" data-modal="wilderness-survival">Learn more</button>
             </article>
 
             <article class="event-card reveal">
@@ -319,6 +328,7 @@
               <h3>Marksmanship Competition</h3>
               <p>Cadets compete on the range or the Engagement Skills Trainer (EST) to demonstrate safe, accurate marksmanship.</p>
               <span class="event-meta">All Skill Levels</span>
+              <button class="topic-btn" data-modal="marksmanship">Learn more</button>
             </article>
 
           </div>
@@ -410,6 +420,16 @@
       </section>
 
     </main>
+
+    <!-- ── Info Modal ── -->
+    <div class="modal-overlay" id="modal-overlay" hidden aria-hidden="true">
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="modal-close" aria-label="Close dialog">&#10005;</button>
+        <h2 id="modal-title" class="modal-title"></h2>
+        <div id="modal-body" class="modal-body"></div>
+        <p id="modal-attribution" class="modal-attribution"></p>
+      </div>
+    </div>
 
     <!-- ── Footer ── -->
     <footer class="site-footer">
