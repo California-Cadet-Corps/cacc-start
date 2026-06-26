@@ -128,6 +128,19 @@ test('GET / contains ribbon <img> elements sourced from /ribbons/', async () => 
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / contains official cacadets.org links and no bare placeholder href', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /href="https:\/\/cacadets\.org\/"/, 'page must link to https://cacadets.org/');
+  assert.match(text, /href="https:\/\/cacadets\.org\/Commandant\/HowtoJoin"/, 'page must link to How to Join');
+  assert.doesNotMatch(text, /href="#"/, 'page must not contain bare placeholder href="#"');
+  assert.doesNotMatch(text, /href="https?:\/\/example\.com/, 'page must not contain example.com links');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('ribbon box layout: cards are flex columns with sized images and wrapping descriptions', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
