@@ -3,298 +3,431 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>California Cadet Corps</title>
-    <style>
-      :root {
-        --primary-blue: #0f3a7d;
-        --accent-gold: #d4af37;
-        --dark-blue: #0a2a5e;
-        --light-gold: #f0d060;
-        --text-light: #f5f7fa;
-        --text-muted: #c8d0dc;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-        background: var(--primary-blue);
-        color: var(--text-light);
-        min-height: 100vh;
-      }
-
-      /* ── Navbar ── */
-      .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: var(--dark-blue);
-        border-bottom: 2px solid var(--accent-gold);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.75rem 2rem;
-        gap: 1rem;
-      }
-
-      .navbar-brand {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-        color: var(--text-light);
-      }
-
-      .navbar-logo {
-        max-height: 44px;
-        width: auto;
-      }
-
-      .navbar-brand h1 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        color: var(--accent-gold);
-        white-space: nowrap;
-      }
-
-      .navbar-actions {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .btn-nav {
-        background: transparent;
-        border: 1px solid var(--accent-gold);
-        color: var(--accent-gold);
-        padding: 0.4rem 0.9rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        cursor: pointer;
-        transition: background 0.2s, color 0.2s;
-      }
-
-      .btn-nav:hover {
-        background: var(--accent-gold);
-        color: var(--dark-blue);
-      }
-
-      .navbar-social {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-
-      .social-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 1px solid var(--accent-gold);
-        color: var(--accent-gold);
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-decoration: none;
-        transition: background 0.2s, color 0.2s;
-      }
-
-      .social-link:hover {
-        background: var(--accent-gold);
-        color: var(--dark-blue);
-      }
-
-      /* ── Hero ── */
-      .hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 60vh;
-        padding: 4rem 2rem;
-        text-align: center;
-        background: linear-gradient(160deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
-      }
-
-      .hero-logo {
-        width: 180px;
-        object-fit: cover;
-        animation: logoFloat 4s ease-in-out infinite;
-        margin-bottom: 2rem;
-      }
-
-      @keyframes logoFloat {
-        0%, 100% { transform: translateY(0); }
-        50%       { transform: translateY(-14px); }
-      }
-
-      .hero h2 {
-        font-size: clamp(3rem, 10vw, 6rem);
-        font-weight: 900;
-        letter-spacing: 0.12em;
-        color: var(--accent-gold);
-        line-height: 1;
-        margin-bottom: 1rem;
-      }
-
-      .hero-tagline {
-        font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-        letter-spacing: 0.25em;
-        color: var(--text-muted);
-        font-weight: 500;
-        text-transform: uppercase;
-      }
-
-      /* ── Content / About ── */
-      .content {
-        padding: 4rem 2rem;
-        display: flex;
-        justify-content: center;
-      }
-
-      .about-box {
-        max-width: 820px;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(212, 175, 55, 0.25);
-        border-radius: 8px;
-        padding: 2.5rem 3rem;
-      }
-
-      .about-box h3 {
-        font-size: 1.4rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        color: var(--accent-gold);
-        text-transform: uppercase;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-      }
-
-      .about-box p {
-        font-size: 1rem;
-        line-height: 1.75;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-      }
-
-      .about-box p:last-child {
-        margin-bottom: 0;
-      }
-
-      /* ── Responsive ── */
-      @media (max-width: 1024px) {
-        .navbar {
-          padding: 0.75rem 1.5rem;
-        }
-        .about-box {
-          padding: 2rem 2rem;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .navbar {
-          flex-wrap: wrap;
-          gap: 0.5rem;
-          padding: 0.75rem 1rem;
-        }
-        .navbar-brand h1 {
-          font-size: 0.95rem;
-        }
-        .hero {
-          padding: 3rem 1.5rem;
-        }
-        .hero-logo {
-          width: 140px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .navbar-actions {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-        .about-box {
-          padding: 1.5rem 1.25rem;
-        }
-        .about-box h3 {
-          font-size: 1.1rem;
-        }
-        .about-box p {
-          font-size: 0.9rem;
-        }
-      }
-    </style>
+    <!-- TODO(integ): HEAD had inline CSS styles; superseded by external styles.css introduced in PR #14. Restore any missing rules from the old inline block if needed. -->
+    <meta name="description" content="New cadet start guide for the California Cadet Corps — ranks, ribbons, events, and everything a brand-new cadet needs to know." />
+    <title>California Cadet Corps — New Cadet Start Guide</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
 
-    <!-- Navbar -->
-    <header class="navbar">
-      <a class="navbar-brand" href="#">
-        <img
-          class="navbar-logo"
-          src="/logo.png"
-          alt="California Cadet Corps logo"
-        />
-        <h1>CALIFORNIA CADET CORPS</h1>
+    <!-- Skip to content for screen readers -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- ── Sticky Navigation ── -->
+    <nav class="site-nav" aria-label="Main navigation">
+      <a class="nav-brand" href="#">
+        <img src="/logo.png" alt="California Cadet Corps logo" width="36" height="36" />
+        <span>CACC</span>
       </a>
 
-      <div class="navbar-actions">
-        <button class="btn-nav">MENU</button>
-        <button class="btn-nav">SEARCH</button>
-        <button class="btn-nav">ASK AN AI</button>
-      </div>
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#ranks">Ranks</a></li>
+        <li><a href="#ribbons">Ribbons</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#new-cadet">New Cadet</a></li>
+      </ul>
 
-      <div class="navbar-social">
-        <a class="social-link" href="#" aria-label="Instagram">IG</a>
-        <a class="social-link" href="#" aria-label="Facebook">FB</a>
-        <a class="social-link" href="#" aria-label="X / Twitter">X</a>
-      </div>
-    </header>
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="nav-links"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >&#9776;</button>
+    </nav>
 
-    <!-- Hero -->
-    <section class="hero">
-      <img
-        class="hero-logo"
-        src="/logo.png"
-        alt="California Cadet Corps crest"
-      />
-      <h2>CACC</h2>
-      <p class="hero-tagline">LEADERSHIP &bull; EXCELLENCE &bull; SERVICE</p>
-    </section>
+    <main id="main">
 
-    <!-- About -->
-    <main class="content">
-      <div class="about-box">
-        <h3>About the Corps — California Cadet Corps</h3>
-        <p>
-          Founded in 1911, the California Cadet Corps is the oldest youth leadership
-          organization in the state of California. Operating under the authority of the
-          California Military Department, we have been developing the next generation of
-          leaders for over a century.
-        </p>
-        <p>
-          Our cadets — drawn from high schools across California — learn discipline,
-          teamwork, and civic responsibility through rigorous training programs modeled on
-          U.S. Army and Air Force standards. Leadership, Excellence, and Service are not
-          merely words; they are the foundation of everything we do.
-        </p>
-        <p>
-          Whether pursuing a military career or excelling in civilian life, graduates of
-          the California Cadet Corps carry with them the values and skills forged during
-          their time in the program. Join us and discover what you are capable of.
-        </p>
-      </div>
+      <!-- ── Hero ── -->
+      <section class="hero" aria-label="Hero">
+        <img
+          class="hero-logo"
+          src="/logo.png"
+          alt="California Cadet Corps crest"
+          width="160"
+          height="160"
+        />
+        <p class="hero-eyebrow">Est. 1911</p>
+        <h1>California&nbsp;<em>Cadet&nbsp;Corps</em></h1>
+        <p class="hero-tagline">Developing Leaders Since 1911</p>
+        <p class="hero-sub">Formando L&iacute;deres Desde 1911</p>
+        <a class="cta-btn" href="#about">
+          Start Here &darr;
+        </a>
+      </section>
+
+      <!-- ── About ── -->
+      <section class="section section-alt" id="about" aria-labelledby="about-title">
+        <div class="section-inner">
+          <p class="section-label">Who We Are</p>
+          <h2 class="section-title" id="about-title">About the California Cadet Corps</h2>
+          <p class="section-lead">
+            The California Cadet Corps (CACC) is the oldest youth leadership organization in
+            California, operating in public high schools since 1911 under the California
+            Military Department. We develop discipline, teamwork, civic responsibility, and
+            leadership in the next generation.
+          </p>
+
+          <p class="reveal" style="color: var(--text-muted); margin-bottom: 2rem; max-width: 800px;">
+            The program is organized around five core strands, each designed to build a
+            well-rounded cadet ready for any career or path after high school.
+          </p>
+
+          <div class="strand-grid reveal">
+            <article class="strand-card">
+              <span class="strand-icon" aria-hidden="true">&#127942;</span>
+              <h3>Leadership</h3>
+              <p>Develop decision-making, command presence, and the ability to lead peers in high-stress situations.</p>
+            </article>
+            <article class="strand-card">
+              <span class="strand-icon" aria-hidden="true">&#127919;</span>
+              <h3>Citizenship</h3>
+              <p>Foster civic awareness, community service, and a sense of duty to California and the nation.</p>
+            </article>
+            <article class="strand-card">
+              <span class="strand-icon" aria-hidden="true">&#128081;</span>
+              <h3>Military Subjects</h3>
+              <p>Learn drill &amp; ceremonies, land navigation, marksmanship safety, and military courtesies.</p>
+            </article>
+            <article class="strand-card">
+              <span class="strand-icon" aria-hidden="true">&#127939;</span>
+              <h3>Healthy Living</h3>
+              <p>Build physical fitness, nutrition habits, and mental resilience through PT and wellness programs.</p>
+            </article>
+            <article class="strand-card">
+              <span class="strand-icon" aria-hidden="true">&#128218;</span>
+              <h3>Academics</h3>
+              <p>Reinforce classroom skills — goal-setting, study habits, and academic achievement count toward advancement.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Ranks ── -->
+      <section class="section" id="ranks" aria-labelledby="ranks-title">
+        <div class="section-inner">
+          <p class="section-label">Promotion Path</p>
+          <h2 class="section-title" id="ranks-title">Your First Four Ranks</h2>
+          <p class="section-lead">
+            Every cadet starts as a Recruit and earns their way up. Advancement requires
+            Time-in-Grade (TIG) <em>and</em> a Performance Task Assessment (PTA). There is
+            no automatic right to promotion — it is earned.
+          </p>
+
+          <ol class="rank-timeline" aria-label="Rank progression">
+
+            <li class="rank-item rank-first reveal">
+              <div class="rank-badge" aria-hidden="true">
+                <span class="rank-abbr">RCT</span>
+                <span class="rank-num">E-1</span>
+              </div>
+              <div class="rank-body">
+                <h3>Recruit</h3>
+                <p class="rank-meta">First Semester &mdash; Day One</p>
+                <p>
+                  Every cadet begins here. As a Recruit you are learning the ropes —
+                  uniform standards, cadet courtesies, basic drill, and the culture of the
+                  corps. No PTA is required to enter; your clock starts ticking the day you
+                  join your unit.
+                </p>
+              </div>
+            </li>
+
+            <li class="rank-item reveal">
+              <div class="rank-badge" aria-hidden="true">
+                <span class="rank-abbr">CDT</span>
+                <span class="rank-num">E-2</span>
+              </div>
+              <div class="rank-body">
+                <h3>Cadet</h3>
+                <p class="rank-meta">~After 1 Semester + PTA</p>
+                <p>
+                  After roughly one semester of satisfactory participation you become
+                  eligible for your first PTA. Pass it and you receive the Cadet rank —
+                  the first real milestone. Attendance, attitude, and effort all factor in.
+                </p>
+              </div>
+            </li>
+
+            <li class="rank-item reveal">
+              <div class="rank-badge" aria-hidden="true">
+                <span class="rank-abbr">CFC</span>
+                <span class="rank-num">E-3</span>
+              </div>
+              <div class="rank-body">
+                <h3>Cadet First Class</h3>
+                <p class="rank-meta">~After 2nd Semester + PTA</p>
+                <p>
+                  With a second semester of quality service and another PTA, you advance to
+                  Cadet First Class. You are no longer the newest person in the room and
+                  start taking on junior mentorship responsibilities.
+                </p>
+              </div>
+            </li>
+
+            <li class="rank-item reveal">
+              <div class="rank-badge" aria-hidden="true">
+                <span class="rank-abbr">C/CPL</span>
+                <span class="rank-num">E-4</span>
+              </div>
+              <div class="rank-body">
+                <h3>Cadet Corporal</h3>
+                <p class="rank-meta">~After 3rd Semester + PTA</p>
+                <p>
+                  Corporal is the first Non-Commissioned Officer (NCO) rank. You now lead
+                  small groups, set the standard for junior cadets, and are expected to
+                  know CACC regulations and your unit's mission cold. A significant
+                  milestone — and just the beginning of the NCO path.
+                </p>
+              </div>
+            </li>
+
+          </ol>
+
+          <p class="rank-ref">
+            Authoritative promotion criteria: <a href="https://www.cacadets.org/Cadet/Rank-Structure" target="_blank" rel="noopener">cacadets.org/Cadet/Rank-Structure</a> and
+            <strong>CR 1-5</strong> (Cadet Regulation 1-5 — Promotions). Requirements
+            listed here are guidance; official criteria govern.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── Ribbons ── -->
+      <section class="section section-alt" id="ribbons" aria-labelledby="ribbons-title">
+        <div class="section-inner">
+          <p class="section-label">Awards</p>
+          <h2 class="section-title" id="ribbons-title">Earn Your First Ribbons</h2>
+          <p class="section-lead">
+            Ribbons are worn on your dress uniform and represent achievement. As a new
+            cadet, these seven are the most accessible — focus here first.
+          </p>
+
+          <div class="ribbon-grid">
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: #2e86c1;" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Perfect Attendance</h3>
+                <p>Attend every scheduled unit meeting during a grading period without an unexcused absence.</p>
+              </div>
+            </article>
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: #27ae60;" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Physical Fitness</h3>
+                <p>Meet or exceed the Army Physical Fitness Test (APFT) standards for your age and gender.</p>
+              </div>
+            </article>
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: #8e44ad;" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Marksmanship Training</h3>
+                <p>Complete the required marksmanship safety training and qualify on the range or EST.</p>
+              </div>
+            </article>
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: #c0392b;" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Basic Leadership School</h3>
+                <p>Attend and successfully complete a CACC-sponsored Basic Leadership School (BLS).</p>
+              </div>
+            </article>
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: #e67e22;" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Bivouac</h3>
+                <p>Participate in a sanctioned overnight bivouac field training exercise with your unit.</p>
+              </div>
+            </article>
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: #16a085;" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Individual Community Service</h3>
+                <p>Complete the minimum required hours of individual community service outside of cadet events.</p>
+              </div>
+            </article>
+
+            <article class="ribbon-card reveal">
+              <div class="ribbon-icon" style="background: var(--gold);" aria-hidden="true"></div>
+              <div class="ribbon-body">
+                <h3>Citizenship</h3>
+                <p>Demonstrate exemplary citizenship contributions as assessed by your unit commander.</p>
+              </div>
+            </article>
+
+          </div>
+
+          <p class="ribbon-ref">
+            Full ribbon criteria: <a href="https://www.cacadets.org/Cadet/Ribbon-Chart" target="_blank" rel="noopener">cacadets.org/Cadet/Ribbon-Chart</a> and
+            <strong>CR 1-1</strong> (Cadet Regulation 1-1 — Awards). Specific requirements
+            may vary; consult your unit S1 or commander.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── Events ── -->
+      <section class="section" id="events" aria-labelledby="events-title">
+        <div class="section-inner">
+          <p class="section-label">Get Involved</p>
+          <h2 class="section-title" id="events-title">Cadet Events</h2>
+          <p class="section-lead">
+            Events are where cadets grow fastest. They earn ribbons, test skills, and build
+            friendships across the corps. Here are the key events you can attend as a new cadet.
+          </p>
+
+          <div class="events-grid">
+
+            <article class="event-card reveal">
+              <span class="event-icon" aria-hidden="true">&#127961;</span>
+              <h3>Summer Encampment</h3>
+              <p>The flagship annual event held at Camp San Luis Obispo. Two weeks of intensive training, leadership challenges, and corps-wide competition.</p>
+              <span class="event-meta">~$150 &bull; Camp SLO</span>
+            </article>
+
+            <article class="event-card reveal">
+              <span class="event-icon" aria-hidden="true">&#127937;</span>
+              <h3>Drill Competition</h3>
+              <p>Units compete in armed and unarmed drill, color guard, and individual events before a panel of military judges.</p>
+              <span class="event-meta">Regional &bull; Statewide</span>
+            </article>
+
+            <article class="event-card reveal">
+              <span class="event-icon" aria-hidden="true">&#127956;</span>
+              <h3>Grizzly Adventure / Summer Camp</h3>
+              <p>An outdoor adventure camp focused on team challenges, high-ropes courses, and wilderness survival.</p>
+              <span class="event-meta">Summer</span>
+            </article>
+
+            <article class="event-card reveal">
+              <span class="event-icon" aria-hidden="true">&#127795;</span>
+              <h3>Wilderness &amp; Survival Training</h3>
+              <p>Multi-day field training in land navigation, bivouac, shelter building, and backcountry skills.</p>
+              <span class="event-meta">Field Training</span>
+            </article>
+
+            <article class="event-card reveal">
+              <span class="event-icon" aria-hidden="true">&#127919;</span>
+              <h3>Marksmanship Competition</h3>
+              <p>Cadets compete on the range or the Engagement Skills Trainer (EST) to demonstrate safe, accurate marksmanship.</p>
+              <span class="event-meta">All Skill Levels</span>
+            </article>
+
+          </div>
+
+          <div class="at-event reveal">
+            <h3>What You&#8217;ll Do at an Event</h3>
+            <ul class="at-event-list" aria-label="Activities at cadet events">
+              <li>Drill &amp; Ceremonies</li>
+              <li>Physical Training (PT)</li>
+              <li>Barracks Inspections</li>
+              <li>CACC Knowledge Testing</li>
+              <li>Bivouac (Overnight Field Camp)</li>
+              <li>Obstacle Course</li>
+              <li>Alpine Tower / Climbing Wall</li>
+              <li>Leadership Reaction Course (LRC)</li>
+              <li>Compass &amp; Map Reading</li>
+              <li>Engagement Skills Trainer (EST)</li>
+            </ul>
+          </div>
+
+          <p class="rank-ref" style="margin-top: 2rem;">
+            Full events calendar: <a href="https://www.cacadets.org/Events" target="_blank" rel="noopener">cacadets.org/Events</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ── New Cadet ── -->
+      <section class="section section-alt" id="new-cadet" aria-labelledby="new-cadet-title">
+        <div class="section-inner">
+          <p class="section-label">Getting Started</p>
+          <h2 class="section-title" id="new-cadet-title">What a New Cadet Needs</h2>
+          <p class="section-lead">
+            Your first weeks set the tone. Check off these five priorities and you will be
+            ahead of the curve before your first PTA.
+          </p>
+
+          <ul class="checklist">
+
+            <li class="reveal">
+              <span class="check-num" aria-hidden="true">1</span>
+              <div>
+                <strong>Learn Cadet Courtesies</strong>
+                Know when and how to salute, how to address officers and NCOs, and the
+                basic customs of the corps. First impressions are lasting ones.
+              </div>
+            </li>
+
+            <li class="reveal">
+              <span class="check-num" aria-hidden="true">2</span>
+              <div>
+                <strong>Get and Maintain Your Uniform</strong>
+                Your unit will issue your uniform — learn how to wear it correctly.
+                Inspect it before every meeting: pressed, boots shined, insignia straight.
+                A sharp uniform signals you take this seriously.
+              </div>
+            </li>
+
+            <li class="reveal">
+              <span class="check-num" aria-hidden="true">3</span>
+              <div>
+                <strong>Attend Every Meeting</strong>
+                Attendance is the single biggest factor in early promotion and ribbon
+                eligibility. Missing meetings without an excused absence stalls your clock.
+                Show up, on time, in uniform, every time.
+              </div>
+            </li>
+
+            <li class="reveal">
+              <span class="check-num" aria-hidden="true">4</span>
+              <div>
+                <strong>Set Your First Promotion Goal: RCT &#8594; CDT</strong>
+                Talk to your NCO or commander about what the PTA looks like for your unit.
+                Know what is expected, start practicing now, and ask for feedback early.
+              </div>
+            </li>
+
+            <li class="reveal">
+              <span class="check-num" aria-hidden="true">5</span>
+              <div>
+                <strong>Sign Up for Your First Event</strong>
+                Pick one event from the list above and commit. Events are where the
+                program comes alive — and where ribbons and friendships are made. Talk to
+                your commander about registration and any fees.
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </section>
+
     </main>
 
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <ul class="footer-links">
+          <li><a href="https://www.cacadets.org" target="_blank" rel="noopener">cacadets.org</a></li>
+          <li><a href="https://www.cacadets.org/Cadet/Rank-Structure" target="_blank" rel="noopener">Rank Structure</a></li>
+          <li><a href="https://www.cacadets.org/Cadet/Ribbon-Chart" target="_blank" rel="noopener">Ribbon Chart</a></li>
+          <li><a href="https://www.cacadets.org/Events" target="_blank" rel="noopener">Events</a></li>
+        </ul>
+        <p class="footer-disclaimer">
+          This page is a quick-reference guide for new cadets of the
+          <strong>California Cadet Corps</strong>. It is not an official CACC publication.
+          Rank promotion requirements are defined in <strong>CR 1-5</strong>; award criteria
+          are defined in <strong>CR 1-1</strong>. Always consult your unit commander or the
+          official regulations at <a href="https://www.cacadets.org" target="_blank" rel="noopener">cacadets.org</a>
+          for authoritative guidance.
+        </p>
+      </div>
+    </footer>
+
+    <script src="/app.js" defer type="module"></script>
   </body>
 </html>
