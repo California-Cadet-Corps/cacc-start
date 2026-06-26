@@ -1,0 +1,31 @@
+# systemd unit for the cacc-start Node app.
+# Install to: /etc/systemd/system/cacc-start.service
+# Then:  sudo systemctl daemon-reload && sudo systemctl enable --now cacc-start
+#
+# Adjust User/Group and DEPLOY_PATH to match your server (see docs/SERVER_SETUP.md).
+
+[Unit]
+Description=cacc-start (start.cacadets.org)
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+
+# $DEPLOY_PATH/current is a symlink the deploy workflow flips atomically.
+WorkingDirectory=/var/www/cacc-start/current
+EnvironmentFile=/var/www/cacc-start/shared/.env
+ExecStart=/usr/bin/node src/server.js
+
+Restart=on-failure
+RestartSec=3
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,129 @@
+name: Deploy to Production
+
+# Runs ONLY after code is merged (pushed) to main. Builds the app and ships it
+# to the Linode server over SSH using an atomic, symlinked-release layout so a
+# failed deploy never replaces a working one and rollback is instant.
+on:
+  push:
+    branches: [main]
+
+# Never run two production deploys at once; let an in-flight deploy finish.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://start.cacadets.org
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Test
+        run: npm test
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.LINODE_SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.LINODE_HOST }}
+          PORT: ${{ secrets.LINODE_PORT || '22' }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Upload release to server
+        env:
+          HOST: ${{ secrets.LINODE_HOST }}
+          USER: ${{ secrets.LINODE_USER }}
+          PORT: ${{ secrets.LINODE_PORT || '22' }}
+          BASE: ${{ secrets.LINODE_DEPLOY_PATH }}
+          RELEASE: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
+            "mkdir -p '$BASE/releases/$RELEASE' '$BASE/shared'"
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p $PORT" \
+            --exclude='.git' --exclude='.github' --exclude='node_modules' \
+            --exclude='.env' --exclude='deploy/' \
+            ./ "$USER@$HOST:$BASE/releases/$RELEASE/"
+
+      - name: Activate release & restart service
+        env:
+          HOST: ${{ secrets.LINODE_HOST }}
+          USER: ${{ secrets.LINODE_USER }}
+          PORT: ${{ secrets.LINODE_PORT || '22' }}
+          BASE: ${{ secrets.LINODE_DEPLOY_PATH }}
+          RELEASE: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
+            "RELEASE='$RELEASE' BASE='$BASE' bash -s" <<'REMOTE'
+          set -euo pipefail
+          RELEASE_DIR="$BASE/releases/$RELEASE"
+
+          # Link shared, non-versioned files (e.g. server .env) into the release.
+          ln -sfn "$BASE/shared/.env" "$RELEASE_DIR/.env"
+
+          # Install production dependencies inside the new release.
+          cd "$RELEASE_DIR"
+          npm ci --omit=dev
+
+          # Atomically flip the "current" symlink to the new release.
+          ln -sfn "$RELEASE_DIR" "$BASE/current"
+
+          # Restart the service (sudoers rule allows this exact command, no password).
+          sudo systemctl restart cacc-start
+
+          # Keep only the 5 most recent releases.
+          cd "$BASE/releases"
+          ls -1dt */ | tail -n +6 | xargs -r rm -rf
+
+          echo "Activated release $RELEASE"
+          REMOTE
+
+      - name: Verify deployment (health check)
+        env:
+          HOST: ${{ secrets.LINODE_HOST }}
+          USER: ${{ secrets.LINODE_USER }}
+          PORT: ${{ secrets.LINODE_PORT || '22' }}
+        run: |
+          set -euo pipefail
+          # Poll the local health endpoint on the server; fail the job if unhealthy.
+          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
+            'for i in $(seq 1 10); do
+               if curl -fsS http://127.0.0.1:3000/healthz >/dev/null; then
+                 echo "Health check passed"; exit 0;
+               fi; sleep 3;
+             done; echo "Health check FAILED"; exit 1'
+
+      - name: Deployment summary
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "### ✅ Deployed \`${{ github.sha }}\` to https://start.cacadets.org" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### ❌ Deployment failed — production unchanged. See docs/ROLLBACK.md" >> "$GITHUB_STEP_SUMMARY"
+          fi

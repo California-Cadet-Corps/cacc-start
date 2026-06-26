@@ -1,0 +1,25 @@
+{
+  "name": "cacc-start",
+  "version": "0.1.0",
+  "private": false,
+  "description": "California Cadet Corps start portal — production app for start.cacadets.org",
+  "license": "MIT",
+  "author": "California Cadet Corps",
+  "homepage": "https://start.cacadets.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/California-Cadet-Corps/cacc-start.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "build": "node -e \"console.log('No build step required yet — placeholder for a future bundler.')\"",
+    "test": "node --test",
+    "lint": "node --check src/server.js"
+  }
+}
