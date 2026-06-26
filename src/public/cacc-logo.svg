@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <path id="top-arc" d="M 13,100 A 87,87 0 0,0 187,100"/>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="100" cy="100" r="97" fill="#0b1d3a"/>
+  <!-- Outer gold ring -->
+  <circle cx="100" cy="100" r="97" fill="none" stroke="#c8a84b" stroke-width="5"/>
+  <!-- Inner gold ring -->
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#c8a84b" stroke-width="1.5"/>
+
+  <!-- CALIFORNIA CADET CORPS along top arc -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#c8a84b" font-weight="bold" letter-spacing="1.5">
+    <textPath href="#top-arc" startOffset="50%" text-anchor="middle">CALIFORNIA CADET CORPS</textPath>
+  </text>
+
+  <!-- 5-pointed star, center (100,85), outer r=24, inner r=9 -->
+  <polygon
+    points="100,61 105.3,77.7 122.8,77.6 108.6,87.8 114.1,104.4 100,94 85.9,104.4 91.4,87.8 77.2,77.6 94.7,77.7"
+    fill="#c8a84b"
+  />
+
+  <!-- CACC -->
+  <text x="100" y="131"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="22" font-weight="bold" fill="#c8a84b"
+    text-anchor="middle" letter-spacing="3">CACC</text>
+
+  <!-- EST. 1911 -->
+  <text x="100" y="149"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="9" fill="#c8a84b"
+    text-anchor="middle" letter-spacing="3">EST. 1911</text>
+</svg>
