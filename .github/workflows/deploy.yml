@@ -49,13 +49,39 @@ jobs:
           PORT: ${{ secrets.LINODE_PORT || '22' }}
         run: |
           set -euo pipefail
+          retry() {
+            local n=0 max=4 delay=5 exit_code=0
+            while [ $n -lt $max ]; do
+              "$@" && return 0 || exit_code=$?
+              n=$((n + 1))
+              if [ $n -lt $max ]; then
+                echo "Attempt $n/$max failed (exit $exit_code) — retrying in ${delay}s…" >&2
+                sleep "$delay"
+                delay=$((delay * 2))
+              fi
+            done
+            return $exit_code
+          }
           mkdir -p ~/.ssh
           printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          # Capture the server's host key. Do NOT swallow errors: if this comes
-          # back empty, every later ssh/rsync would block forever on the
-          # interactive "yes/no" host-key prompt. Fail loudly instead.
-          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          # Capture the server's host key; retry on transient connectivity gaps.
+          # Do NOT swallow errors after retries: if known_hosts stays empty, every
+          # later ssh/rsync would block forever on the interactive host-key prompt.
+          keyscan_once() {
+            local tmp
+            tmp=$(mktemp)
+            ssh-keyscan -p "$PORT" -H "$HOST" 2>/dev/null > "$tmp"
+            if [ -s "$tmp" ]; then
+              cat "$tmp" >> ~/.ssh/known_hosts
+              rm -f "$tmp"
+              return 0
+            fi
+            rm -f "$tmp"
+            echo "ssh-keyscan returned no host key for $HOST:$PORT" >&2
+            return 1
+          }
+          retry keyscan_once
           if ! grep -q . ~/.ssh/known_hosts; then
             echo "ssh-keyscan captured no host key for $HOST:$PORT — aborting." >&2
             exit 1
@@ -70,6 +96,19 @@ jobs:
           RELEASE: ${{ github.sha }}
         run: |
           set -euo pipefail
+          retry() {
+            local n=0 max=4 delay=5 exit_code=0
+            while [ $n -lt $max ]; do
+              "$@" && return 0 || exit_code=$?
+              n=$((n + 1))
+              if [ $n -lt $max ]; then
+                echo "Attempt $n/$max failed (exit $exit_code) — retrying in ${delay}s…" >&2
+                sleep "$delay"
+                delay=$((delay * 2))
+              fi
+            done
+            return $exit_code
+          }
           # Non-interactive, time-bounded SSH. BatchMode makes a failed auth
           # error out instead of prompting (and hanging) for a password;
           # ConnectTimeout bounds the handshake; ServerAlive* drops a silently
@@ -78,9 +117,9 @@ jobs:
             -o BatchMode=yes -o ConnectTimeout=15 \
             -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
             -o StrictHostKeyChecking=accept-new"
-          ssh $SSH_OPTS "$USER@$HOST" \
+          retry ssh $SSH_OPTS "$USER@$HOST" \
             "mkdir -p '$BASE/releases/$RELEASE' '$BASE/shared'"
-          rsync -az --delete \
+          retry rsync -az --delete \
             -e "ssh $SSH_OPTS" \
             --exclude='.git' --exclude='.github' --exclude='node_modules' \
             --exclude='.env' --exclude='deploy/' \
@@ -95,12 +134,24 @@ jobs:
           RELEASE: ${{ github.sha }}
         run: |
           set -euo pipefail
+          retry() {
+            local n=0 max=4 delay=5 exit_code=0
+            while [ $n -lt $max ]; do
+              "$@" && return 0 || exit_code=$?
+              n=$((n + 1))
+              if [ $n -lt $max ]; then
+                echo "Attempt $n/$max failed (exit $exit_code) — retrying in ${delay}s…" >&2
+                sleep "$delay"
+                delay=$((delay * 2))
+              fi
+            done
+            return $exit_code
+          }
           SSH_OPTS="-i $HOME/.ssh/deploy_key -p $PORT \
             -o BatchMode=yes -o ConnectTimeout=15 \
             -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
             -o StrictHostKeyChecking=accept-new"
-          ssh $SSH_OPTS "$USER@$HOST" \
-            "RELEASE='$RELEASE' BASE='$BASE' bash -s" <<'REMOTE'
+          REMOTE_SCRIPT=$(cat <<'REMOTE'
           set -euo pipefail
           RELEASE_DIR="$BASE/releases/$RELEASE"
 
@@ -123,6 +174,12 @@ jobs:
 
           echo "Activated release $RELEASE"
           REMOTE
+          )
+          activate_once() {
+            echo "$REMOTE_SCRIPT" | ssh $SSH_OPTS "$USER@$HOST" \
+              "RELEASE='$RELEASE' BASE='$BASE' bash -s"
+          }
+          retry activate_once
 
       - name: Verify deployment (health check)
         env:
@@ -135,12 +192,24 @@ jobs:
           # Poll the local health endpoint on the server; fail the job if unhealthy.
           # The app port is read from shared/.env (the source of truth) so it is
           # never hardcoded here.
+          retry() {
+            local n=0 max=4 delay=5 exit_code=0
+            while [ $n -lt $max ]; do
+              "$@" && return 0 || exit_code=$?
+              n=$((n + 1))
+              if [ $n -lt $max ]; then
+                echo "Attempt $n/$max failed (exit $exit_code) — retrying in ${delay}s…" >&2
+                sleep "$delay"
+                delay=$((delay * 2))
+              fi
+            done
+            return $exit_code
+          }
           SSH_OPTS="-i $HOME/.ssh/deploy_key -p $PORT \
             -o BatchMode=yes -o ConnectTimeout=15 \
             -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
             -o StrictHostKeyChecking=accept-new"
-          ssh $SSH_OPTS "$USER@$HOST" \
-            "BASE='$BASE' bash -s" <<'REMOTE'
+          REMOTE_SCRIPT=$(cat <<'REMOTE'
           set -euo pipefail
           APP_PORT="$(grep -E '^PORT=' "$BASE/shared/.env" | head -1 | cut -d= -f2)"
           APP_PORT="${APP_PORT:-3000}"
@@ -152,6 +221,12 @@ jobs:
           done
           echo "Health check FAILED on port ${APP_PORT}"; exit 1
           REMOTE
+          )
+          health_once() {
+            echo "$REMOTE_SCRIPT" | ssh $SSH_OPTS "$USER@$HOST" \
+              "BASE='$BASE' bash -s"
+          }
+          retry health_once
 
       - name: Deployment summary
         if: always()
