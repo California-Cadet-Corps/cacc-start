@@ -22,6 +22,8 @@ test('GET / serves the landing page', async () => {
   assert.match(text, /California Cadet Corp/);
   assert.match(text, /logo\.png/);
   assert.match(text, /cacadets\.org\/Cadet\/Ribbon%20Chart\?lang=en/);
+  assert.match(text, /rel="icon"/, 'page must declare a favicon link');
+  assert.match(text, /cacc-logo\.svg/, 'page must reference cacc-logo.svg');
   await new Promise((resolve) => server.close(resolve));
 });
 
@@ -126,6 +128,15 @@ test('GET / contains ribbon <img> elements sourced from /ribbons/', async () => 
   assert.equal(res.status, 200);
   assert.match(text, /ribbons\//, 'page must reference a file under /ribbons/');
   assert.match(text, /<img[^>]+src="\/ribbons\/[^"]+\.png"/, 'page must contain an <img> with a ribbons/ src');
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET /cacc-logo.svg returns 200 with image/svg+xml content-type', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/cacc-logo.svg`);
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type'), /image\/svg\+xml/);
   await new Promise((resolve) => server.close(resolve));
 });
 
