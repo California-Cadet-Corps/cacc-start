@@ -10,6 +10,25 @@ A Node.js application maintained by the California Cadet Corps. This repository 
 
 ---
 
+## 🎒 New student developer? Start here!
+
+Never coded before? No problem. The **[Student Developer Guide](./docs/students/README.md)**
+walks you through everything from zero — with every exact command:
+
+1. [Set up your laptop](./docs/students/01-setup-your-laptop.md) (Git, Node, VS Code, GitHub)
+2. [Make a Pull Request](./docs/students/02-how-to-make-a-pull-request.md)
+3. [How deployment works](./docs/students/03-how-deployment-works.md)
+4. [Prompt engineering with Claude](./docs/students/04-prompt-engineering-with-claude.md)
+5. [Product management 101](./docs/students/05-product-management.md)
+6. [UI/UX design 101](./docs/students/06-ui-ux-101.md)
+7. [Testing your work](./docs/students/07-testing-your-work.md)
+
+Plus copy-and-paste **[templates](./docs/students/templates)** for specs, user stories, prompts, design checklists, test plans, and bug reports.
+
+> **Teachers/mentors:** just give students the link to this repo and point them at the guide above.
+
+---
+
 ## Table of contents
 
 - [Quick start](#quick-start)
