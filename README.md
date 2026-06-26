@@ -57,7 +57,7 @@ cacc-start/
 │   ├── server.js        # HTTP server entry point
 │   └── public/          # Static assets served by the app
 ├── deploy/              # Server provisioning artifacts (not deployed by CI)
-│   ├── nginx/           # Nginx site config
+│   ├── apache/          # Apache reverse-proxy vhost
 │   ├── systemd/         # systemd service unit
 │   └── scripts/         # server-setup.sh, rollback.sh
 ├── docs/                # Contributor & operator documentation
@@ -85,12 +85,14 @@ Full details: **[docs/CONTRIBUTING-PRS.md](./docs/CONTRIBUTING-PRS.md)** and **[
 
 ## Deployment
 
-Production runs on a **Linode** server behind **Nginx**, served at **https://start.cacadets.org**. Deployment is automated: a push to `main` runs [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml), which builds the app and ships it over SSH using an atomic, symlinked-release strategy that supports instant rollback.
+Production runs on a **Linode** server behind **Apache** (reverse-proxying to the Node app on `127.0.0.1:3002`), served at **https://start.cacadets.org**. Deployment is automated: a push to `main` runs [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml), which builds the app and ships it over SSH using an atomic, symlinked-release strategy that supports instant rollback.
 
 - How it works → **[docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)**
 - Rolling back → **[docs/ROLLBACK.md](./docs/ROLLBACK.md)**
 - One-time server provisioning → **[docs/SERVER_SETUP.md](./docs/SERVER_SETUP.md)**
 - Required GitHub Secrets → **[docs/SECRETS.md](./docs/SECRETS.md)**
+
+> **Production note:** the app listens on port **3002** (port 3000 was already taken on the shared Linode host). The port lives in the server's `shared/.env` and the deploy health check reads it from there.
 
 ## Documentation
 
