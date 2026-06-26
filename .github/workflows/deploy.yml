@@ -109,15 +109,25 @@ jobs:
           HOST: ${{ secrets.LINODE_HOST }}
           USER: ${{ secrets.LINODE_USER }}
           PORT: ${{ secrets.LINODE_PORT || '22' }}
+          BASE: ${{ secrets.LINODE_DEPLOY_PATH }}
         run: |
           set -euo pipefail
           # Poll the local health endpoint on the server; fail the job if unhealthy.
+          # The app port is read from shared/.env (the source of truth) so it is
+          # never hardcoded here.
           ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" \
-            'for i in $(seq 1 10); do
-               if curl -fsS http://127.0.0.1:3000/healthz >/dev/null; then
-                 echo "Health check passed"; exit 0;
-               fi; sleep 3;
-             done; echo "Health check FAILED"; exit 1'
+            "BASE='$BASE' bash -s" <<'REMOTE'
+          set -euo pipefail
+          APP_PORT="$(grep -E '^PORT=' "$BASE/shared/.env" | head -1 | cut -d= -f2)"
+          APP_PORT="${APP_PORT:-3000}"
+          for i in $(seq 1 10); do
+            if curl -fsS "http://127.0.0.1:${APP_PORT}/healthz" >/dev/null; then
+              echo "Health check passed on port ${APP_PORT}"; exit 0
+            fi
+            sleep 3
+          done
+          echo "Health check FAILED on port ${APP_PORT}"; exit 1
+          REMOTE
 
       - name: Deployment summary
         if: always()
