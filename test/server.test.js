@@ -97,3 +97,23 @@ test('responsive contract: viewport meta and @media rule present', async () => {
   assert.match(css, /@media/, 'at least one @media rule must be present in styles.css');
   await new Promise((resolve) => server.close(resolve));
 });
+
+test('GET /ribbons/perfect-attendance.png serves a ribbon image with 200 and image/png content-type', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/ribbons/perfect-attendance.png`);
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type'), /image\/png/);
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET / contains ribbon <img> elements sourced from /ribbons/', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /ribbons\//, 'page must reference a file under /ribbons/');
+  assert.match(text, /<img[^>]+src="\/ribbons\/[^"]+\.png"/, 'page must contain an <img> with a ribbons/ src');
+  await new Promise((resolve) => server.close(resolve));
+});
