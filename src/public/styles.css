@@ -753,3 +753,53 @@ body {
     padding: 1.5rem 1.25rem;
   }
 }
+
+/* ── Responsive: small mobile ── */
+@media (max-width: 480px) {
+  :root {
+    --section-pad: 2.5rem 1rem;
+  }
+
+  .site-nav {
+    padding: 0 1rem;
+  }
+
+  .hero {
+    padding: 3rem 1rem 2.5rem;
+  }
+
+  .hero-logo {
+    width: 96px;
+    height: 96px;
+  }
+
+  .rank-badge {
+    width: 56px;
+    height: 56px;
+  }
+
+  .rank-timeline::before {
+    left: 26px;
+  }
+
+  .at-event {
+    padding: 1.25rem 1rem;
+  }
+
+  .checklist li {
+    padding: 0.875rem 1rem;
+  }
+
+  .site-footer {
+    padding: 2rem 1rem;
+  }
+
+  .footer-links {
+    gap: 0.875rem;
+  }
+}
+
+/* ── Overflow safety for long inline tokens ── */
+code, strong, a {
+  overflow-wrap: break-word;
+}

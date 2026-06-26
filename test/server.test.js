@@ -82,3 +82,17 @@ test('GET /app.js returns 200 with text/javascript content-type', async () => {
   assert.match(res.headers.get('content-type'), /text\/javascript/);
   await new Promise((resolve) => server.close(resolve));
 });
+
+test('responsive contract: viewport meta and @media rule present', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const [htmlRes, cssRes] = await Promise.all([
+    fetch(`http://localhost:${port}/`),
+    fetch(`http://localhost:${port}/styles.css`),
+  ]);
+  const html = await htmlRes.text();
+  const css = await cssRes.text();
+  assert.match(html, /width=device-width/, 'viewport meta must be present');
+  assert.match(css, /@media/, 'at least one @media rule must be present in styles.css');
+  await new Promise((resolve) => server.close(resolve));
+});
