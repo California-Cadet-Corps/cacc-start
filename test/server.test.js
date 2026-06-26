@@ -153,6 +153,16 @@ test('GET / contains official cacadets.org links and no bare placeholder href', 
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / contains buttons with data-modal attribute', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /<button[^>]+data-modal=/, 'page must contain a button with a data-modal attribute');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('ribbon box layout: cards are flex columns with sized images and wrapping descriptions', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
