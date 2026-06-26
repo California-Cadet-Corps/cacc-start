@@ -65,6 +65,20 @@ body {
   top: 1rem;
 }
 
+/* ── Top-left brand wordmark ── */
+.brand {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  z-index: 250;
+  pointer-events: none;
+}
+
 /* ── Sticky Nav ── */
 .site-nav {
   position: sticky;

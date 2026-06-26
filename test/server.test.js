@@ -19,6 +19,7 @@ test('GET / serves the landing page', async () => {
   const text = await res.text();
   assert.equal(res.status, 200);
   assert.match(text, /California Cadet Corps/);
+  assert.match(text, /California Cadet Corp/);
   assert.match(text, /logo\.png/);
   assert.match(text, /cacadets\.org\/Cadet\/Ribbon%20Chart\?lang=en/);
   await new Promise((resolve) => server.close(resolve));
