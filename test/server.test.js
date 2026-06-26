@@ -170,3 +170,14 @@ test('ribbon box layout: cards are flex columns with sized images and wrapping d
   assert.match(css, /\.ribbon-img\s*\{[^}]*object-fit\s*:/, 'ribbon-img must use object-fit to constrain the image');
   await new Promise((resolve) => server.close(resolve));
 });
+
+test('GET / does not contain barracks inspection or alpine tower content', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.doesNotMatch(text, /barracks\s+inspection/i, 'page must not mention barracks inspection');
+  assert.doesNotMatch(text, /alpine\s+tower/i, 'page must not mention alpine tower');
+  assert.doesNotMatch(text, /tower\s+climb/i, 'page must not mention tower climbing');
+  await new Promise((resolve) => server.close(resolve));
+});
