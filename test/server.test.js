@@ -20,6 +20,8 @@ test('GET / serves the landing page', async () => {
   assert.equal(res.status, 200);
   assert.match(text, /California Cadet Corps/);
   assert.match(text, /logo\.png/);
+  assert.match(text, /©|&copy;/);
+  assert.match(text, /2026 California Cadet Corps\. All rights reserved\./);
   await new Promise((resolve) => server.close(resolve));
 });
 
