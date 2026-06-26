@@ -1,6 +1,6 @@
 # Deployment
 
-Production is a **Linode** server running the Node app behind **Nginx**, served
+Production is a **Linode** server running the Node app behind **Apache**, served
 at **https://start.cacadets.org**. Deployment is fully automated by
 [`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml).
 

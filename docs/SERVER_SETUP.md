@@ -18,7 +18,7 @@ start.cacadets.org   AAAA  <linode-ipv6>   (optional)
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y curl git rsync nginx ufw
+sudo apt-get install -y curl git rsync apache2 ufw
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
 sudo apt-get install -y nodejs
 node -v   # expect v20.x
@@ -50,11 +50,15 @@ This matches `LINODE_DEPLOY_PATH=/var/www/cacc-start`.
 
 ```bash
 sudo -u deploy tee /var/www/cacc-start/shared/.env >/dev/null <<'ENV'
-PORT=3000
+PORT=3002
 NODE_ENV=production
 ENV
 sudo chmod 600 /var/www/cacc-start/shared/.env
 ```
+
+> Production uses **3002** because 3000 was already taken on this shared host.
+> Pick any free local port; the Apache vhost and the deploy health check both
+> read it from here.
 
 Add real runtime secrets here later — they are **never** committed to git.
 
@@ -77,35 +81,48 @@ sudo systemctl enable cacc-start
 # Do NOT start yet — there is no current/ release until the first deploy.
 ```
 
-## 7. Nginx reverse proxy
+## 7. Apache reverse proxy
+
+> The production CACC host serves all sites with **Apache** (not nginx). Other
+> subdomains (e.g. `newtools.cacadets.org`) follow this exact pattern.
+
+Ensure the needed modules are enabled (they already are on the prod box):
 
 ```bash
-sudo cp deploy/nginx/start.cacadets.org.conf \
-  /etc/nginx/sites-available/start.cacadets.org
-sudo ln -s /etc/nginx/sites-available/start.cacadets.org \
-  /etc/nginx/sites-enabled/
-sudo nginx -t && sudo systemctl reload nginx
+sudo a2enmod proxy proxy_http headers rewrite ssl
 ```
+
+Install and enable the vhost:
+
+```bash
+sudo cp deploy/apache/start.cacadets.org.conf \
+  /etc/apache2/sites-available/start.cacadets.org.conf
+sudo a2ensite start.cacadets.org.conf
+sudo apache2ctl configtest && sudo systemctl reload apache2
+```
+
+This vhost reverse-proxies `start.cacadets.org` → `127.0.0.1:3002` (the Node
+app's port, set in `shared/.env`).
 
 ## 8. Firewall
 
 ```bash
 sudo ufw allow OpenSSH
-sudo ufw allow 'Nginx Full'
+sudo ufw allow 'Apache Full'
 sudo ufw --force enable
 ```
 
 ## 9. SSL (Let's Encrypt)
 
-After DNS resolves to this server:
+After DNS for `start.cacadets.org` resolves to this server:
 
 ```bash
-sudo apt-get install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d start.cacadets.org
+sudo apt-get install -y certbot python3-certbot-apache
+sudo certbot --apache -d start.cacadets.org --redirect
 ```
 
-Certbot edits the Nginx config to add the certificate and HTTP→HTTPS redirect,
-and installs a renewal timer. Verify auto-renewal:
+Certbot generates `start.cacadets.org-le-ssl.conf` (the 443 vhost), installs the
+certificate, adds the HTTP→HTTPS redirect, and sets up auto-renewal. Verify it:
 
 ```bash
 sudo certbot renew --dry-run
@@ -115,8 +132,8 @@ sudo certbot renew --dry-run
 
 - Certs auto-renew via the `certbot.timer` systemd unit; no action needed.
 - Keep `start.cacadets.org` DNS pointed here or renewal (HTTP-01) will fail.
-- The app listens on plain HTTP on `127.0.0.1:3000`; **TLS terminates at Nginx**.
-  Don't expose port 3000 publicly (the firewall above doesn't).
+- The app listens on plain HTTP on `127.0.0.1:3002`; **TLS terminates at Apache**.
+  Port 3002 is never exposed publicly (the firewall above doesn't open it).
 
 ## 10. First deploy
 
@@ -125,7 +142,7 @@ workflow creates `releases/<sha>` and the `current` symlink. After it succeeds:
 
 ```bash
 sudo systemctl start cacc-start
-curl -fsS http://127.0.0.1:3000/healthz   # {"status":"ok",...}
+curl -fsS http://127.0.0.1:3002/healthz   # {"status":"ok",...}
 ```
 
 Visit **https://start.cacadets.org** to confirm.

@@ -40,7 +40,7 @@ ln -sfn "$BASE/releases/<good-sha>" "$BASE/current"
 
 # 3. Restart and verify:
 sudo systemctl restart cacc-start
-curl -fsS http://127.0.0.1:3000/healthz && echo " OK"
+curl -fsS http://127.0.0.1:3002/healthz && echo " OK"
 ```
 
 ## Roll back via Git (to make prod match a known-good commit permanently)
