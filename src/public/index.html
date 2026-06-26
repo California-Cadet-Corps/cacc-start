@@ -49,10 +49,9 @@
         color: var(--text-light);
       }
 
-      .navbar-brand img {
-        width: 44px;
-        height: 44px;
-        object-fit: cover;
+      .navbar-logo {
+        max-height: 44px;
+        width: auto;
       }
 
       .navbar-brand h1 {
@@ -127,9 +126,7 @@
 
       .hero-logo {
         width: 180px;
-        height: 180px;
         object-fit: cover;
-        box-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
         animation: logoFloat 4s ease-in-out infinite;
         margin-bottom: 2rem;
       }
@@ -218,7 +215,6 @@
         }
         .hero-logo {
           width: 140px;
-          height: 140px;
         }
       }
 
@@ -245,7 +241,8 @@
     <header class="navbar">
       <a class="navbar-brand" href="#">
         <img
-          src="https://cacc.us-east-1.linodeobjects.com/Website%20Source/California_Cadet_Corps_logo.png"
+          class="navbar-logo"
+          src="/logo.png"
           alt="California Cadet Corps logo"
         />
         <h1>CALIFORNIA CADET CORPS</h1>
@@ -268,7 +265,7 @@
     <section class="hero">
       <img
         class="hero-logo"
-        src="https://cacc.us-east-1.linodeobjects.com/Website%20Source/California_Cadet_Corps_logo.png"
+        src="/logo.png"
         alt="California Cadet Corps crest"
       />
       <h2>CACC</h2>
