@@ -197,12 +197,13 @@ body {
 }
 
 .hero h1 {
-  font-size: clamp(2.2rem, 7vw, 5rem);
+  font-size: clamp(1.6rem, 7vw, 5rem);
   font-weight: 900;
   letter-spacing: 0.06em;
   color: var(--text-light);
   line-height: 1.05;
   margin-bottom: 1rem;
+  overflow-wrap: break-word;
 }
 
 .hero h1 em {
@@ -788,6 +789,11 @@ body {
 
   .checklist li {
     padding: 0.875rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.3rem, 8vw, 2rem);
+    letter-spacing: 0.02em;
   }
 
   .site-footer {

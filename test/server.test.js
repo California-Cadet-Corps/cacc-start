@@ -84,6 +84,16 @@ test('GET /app.js returns 200 with text/javascript content-type', async () => {
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / Rank Structure links use the corrected canonical URL', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.match(text, /cacadets\.org\/Cadet\/Rank%20Structure\?lang=en/, 'corrected Rank Structure URL must be present');
+  assert.doesNotMatch(text, /cacadets\.org\/Cadet\/Rank-Structure/, 'old hyphenated Rank-Structure URL must not appear');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('responsive contract: viewport meta and @media rule present', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
