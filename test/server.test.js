@@ -263,6 +263,17 @@ test('GET /chain-of-command.html returns 200 and contains Chain of Command', asy
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / served HTML embeds Spanish translation strings', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /Bienvenido/, 'page must embed Spanish "Bienvenido" string');
+  assert.match(text, /Verificaci/, 'page must embed Spanish "Verificación" string');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('GET / promotion path section: rank insignia images with alt text are present', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
