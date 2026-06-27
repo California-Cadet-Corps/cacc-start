@@ -229,6 +229,30 @@ test('GET / events section: titles link to cacadets.org and disclaimer is presen
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET /i18n.js returns 200 with javascript content-type and includes language codes', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/i18n.js`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type'), /javascript/);
+  assert.match(text, /es/, 'i18n.js must include Spanish language code');
+  assert.match(text, /zh/, 'i18n.js must include Chinese language code');
+  assert.match(text, /de/, 'i18n.js must include German language code');
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET / contains lang-switcher select and data-i18n attributes', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /id="lang-switcher"/, 'page must contain lang-switcher select element');
+  assert.match(text, /data-i18n=/, 'page must contain at least one data-i18n attribute');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('GET / promotion path section: rank insignia images with alt text are present', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
