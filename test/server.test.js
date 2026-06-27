@@ -287,6 +287,16 @@ test('GET / served HTML does not contain class="start-here" anchor', async () =>
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / summer encampment description includes scholarships available', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /scholarships available/, 'summer encampment description must include "scholarships available"');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('GET / promotion path section: rank insignia images with alt text are present', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
