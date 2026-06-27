@@ -63,7 +63,7 @@ A detailed walk-through lives in [docs/CONTRIBUTING-PRS.md](./docs/CONTRIBUTING-
 Conventional, imperative style is appreciated:
 
 ```
-feat: add cadet roster import
+feat: add Cadet roster import
 fix: correct timezone on event dates
 docs: clarify rollback steps
 ```
