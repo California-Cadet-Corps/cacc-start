@@ -306,3 +306,19 @@ test('GET / promotion path section: rank insignia images with alt text are prese
   assert.match(text, /linodeobjects\.com\/Ranks\//, 'rank images must be sourced from cacadets.org image storage');
   await new Promise((resolve) => server.close(resolve));
 });
+
+test('GET / lang-switcher select has Spanish option and dark-text styling', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const [htmlRes, cssRes] = await Promise.all([
+    fetch(`http://localhost:${port}/`),
+    fetch(`http://localhost:${port}/`),
+  ]);
+  const text = await htmlRes.text();
+  assert.equal(htmlRes.status, 200);
+  assert.match(text, /<select[^>]+id="lang-switcher"/, 'lang-switcher must be a <select> element');
+  assert.match(text, /<option[^>]+value="es"/, 'lang-switcher must include a Spanish option');
+  assert.match(text, /Espa/, 'lang-switcher Spanish option must include Español label');
+  assert.match(text, /#lang-switcher\s+option\s*\{[^}]*color\s*:\s*#[0-9a-fA-F]/, 'option elements must have explicit dark text color to avoid white-on-white');
+  await new Promise((resolve) => server.close(resolve));
+});
