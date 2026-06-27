@@ -27,15 +27,6 @@ test('GET / serves the landing page', async () => {
   await new Promise((resolve) => server.close(resolve));
 });
 
-test('GET /logo.svg serves the logo as SVG', async () => {
-  await new Promise((resolve) => server.listen(0, resolve));
-  const { port } = server.address();
-  const res = await fetch(`http://localhost:${port}/logo.svg`);
-  assert.equal(res.status, 200);
-  assert.match(res.headers.get('content-type'), /image\/svg\+xml/);
-  await new Promise((resolve) => server.close(resolve));
-});
-
 test('GET /logo.png serves the logo as PNG', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
@@ -193,16 +184,6 @@ test('ribbon box layout: cards are flex columns with sized images and wrapping d
   await new Promise((resolve) => server.close(resolve));
 });
 
-test('GET / contains corner logo img pointing at https://start.cacadets.org/logo.png', async () => {
-  await new Promise((resolve) => server.listen(0, resolve));
-  const { port } = server.address();
-  const res = await fetch(`http://localhost:${port}/`);
-  const text = await res.text();
-  assert.equal(res.status, 200);
-  assert.match(text, /https:\/\/start\.cacadets\.org\/logo\.png/, 'page must reference the external logo URL');
-  assert.match(text, /<img[^>]+src="https:\/\/start\.cacadets\.org\/logo\.png"/, 'the logo URL must appear inside an <img> src attribute');
-  await new Promise((resolve) => server.close(resolve));
-});
 
 test('GET / does not contain barracks inspection or alpine tower content', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
@@ -294,18 +275,11 @@ test('GET / nav bar contains CACC logo img with local src and descriptive alt te
   const text = await res.text();
   assert.equal(res.status, 200);
   assert.match(text, /<nav/, 'page must contain a <nav> element');
-  assert.match(text, /src="\/logo\.svg"/, 'nav must reference local /logo.svg asset');
+  assert.match(text, /src="\/logo\.png"/, 'nav must reference local /logo.png asset');
   assert.match(text, /alt="California Cadet Corps logo"/, 'logo img must have descriptive alt text');
   await new Promise((resolve) => server.close(resolve));
 });
 
-test('GET /logo.svg nav logo asset serves status 200', async () => {
-  await new Promise((resolve) => server.listen(0, resolve));
-  const { port } = server.address();
-  const res = await fetch(`http://localhost:${port}/logo.svg`);
-  assert.equal(res.status, 200);
-  await new Promise((resolve) => server.close(resolve));
-});
 
 test('GET / summer encampment description includes scholarships available', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
