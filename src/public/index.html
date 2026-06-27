@@ -518,11 +518,27 @@
       welcome: 'Bienvenido a start.cacadets.org.',
       placeholder: 'Esta es la página de inicio provisional del Cuerpo de Cadetes de California.',
       health: 'Verificación de estado: /healthz'
+    },
+    zh: {
+      title: '加利福尼亚学员团 — 新学员入门指南',
+      heading: '加利福尼亚学员团',
+      tagline: '自1911年以来培养领袖',
+      welcome: '欢迎访问 start.cacadets.org。',
+      placeholder: '这是加利福尼亚学员团的临时登录页面。',
+      health: '健康检查：/healthz'
+    },
+    de: {
+      title: 'California Cadet Corps — Leitfaden für neue Kadetten',
+      heading: 'California Cadet Corps',
+      tagline: 'Führungskräfte ausbilden seit 1911',
+      welcome: 'Willkommen auf start.cacadets.org.',
+      placeholder: 'Dies ist die Platzhalter-Startseite des California Cadet Corps.',
+      health: 'Statusprüfung: /healthz'
     }
   };
 
   function setLang(lang) {
-    if (lang !== 'en' && lang !== 'es') lang = 'en';
+    if (!TRANSLATIONS[lang]) lang = 'en';
     var dict = TRANSLATIONS[lang];
     document.documentElement.lang = lang;
     if (dict.title) document.title = dict.title;
@@ -530,8 +546,8 @@
       var key = el.getAttribute('data-i18n');
       if (dict[key] !== undefined) el.textContent = dict[key];
     });
-    document.querySelectorAll('[data-en][data-es]').forEach(function (el) {
-      var val = el.getAttribute('data-' + lang);
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      var val = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
       if (val !== null) el.textContent = val;
     });
     var btn = document.getElementById('lang-toggle');
@@ -547,12 +563,18 @@
   document.addEventListener('DOMContentLoaded', function () {
     var saved;
     try { saved = localStorage.getItem('cacc-lang'); } catch (e) {}
-    var lang = (saved === 'en' || saved === 'es') ? saved : 'en';
+    var lang = (saved && TRANSLATIONS[saved]) ? saved : 'en';
     setLang(lang);
     var btn = document.getElementById('lang-toggle');
     if (btn) {
       btn.addEventListener('click', function () {
         setLang(document.documentElement.lang === 'es' ? 'en' : 'es');
+      });
+    }
+    var sel = document.getElementById('lang-switcher');
+    if (sel) {
+      sel.addEventListener('change', function () {
+        setLang(sel.value);
       });
     }
   });
