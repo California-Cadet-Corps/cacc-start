@@ -48,6 +48,21 @@
         el.textContent = dict[key];
       }
     }
+    // Handle data-en/data-es inline attributes for full-page coverage
+    var langAttr = lang === 'es' ? 'es' : 'en';
+    var attrEls = document.querySelectorAll('[data-en]');
+    for (var j = 0; j < attrEls.length; j++) {
+      var ael = attrEls[j];
+      var aval = ael.getAttribute('data-' + langAttr);
+      if (aval === null) aval = ael.getAttribute('data-en');
+      if (aval !== null) ael.textContent = aval;
+    }
+    // Keep toggle button consistent with current language
+    var toggleBtn = document.getElementById('lang-toggle');
+    if (toggleBtn) {
+      toggleBtn.textContent = lang === 'es' ? 'English' : 'Español';
+      toggleBtn.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Switch to Spanish');
+    }
     var switcher = document.getElementById('lang-switcher');
     if (switcher) {
       switcher.value = lang;
