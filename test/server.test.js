@@ -287,6 +287,26 @@ test('GET / served HTML does not contain class="start-here" anchor', async () =>
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / nav bar contains CACC logo img with local src and descriptive alt text', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /<nav/, 'page must contain a <nav> element');
+  assert.match(text, /src="\/logo\.svg"/, 'nav must reference local /logo.svg asset');
+  assert.match(text, /alt="California Cadet Corps logo"/, 'logo img must have descriptive alt text');
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET /logo.svg nav logo asset serves status 200', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/logo.svg`);
+  assert.equal(res.status, 200);
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('GET / promotion path section: rank insignia images with alt text are present', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
