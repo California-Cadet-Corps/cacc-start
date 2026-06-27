@@ -504,15 +504,25 @@
     <script src="/app.js" defer type="module"></script>
     <script>
 (function () {
+  var dict = {
+    en: { heading: 'California Cadet Corps', tagline: 'Developing Leaders Since 1911' },
+    es: { heading: 'Cuerpo de Cadetes de California', tagline: 'Formando Líderes Desde 1911' }
+  };
   var btn = document.getElementById('lang-toggle');
-  var currentLang = 'en';
+  var lang = 'en';
   btn.addEventListener('click', function () {
-    currentLang = currentLang === 'en' ? 'es' : 'en';
-    document.documentElement.lang = currentLang;
-    document.querySelectorAll('[data-en][data-es]').forEach(function (el) {
-      el.textContent = el.dataset[currentLang];
+    lang = lang === 'en' ? 'es' : 'en';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[lang][key] !== undefined) el.textContent = dict[lang][key];
     });
-    btn.textContent = currentLang === 'es' ? 'english' : 'Español';
+    document.querySelectorAll('[data-en][data-es]').forEach(function (el) {
+      el.textContent = el.dataset[lang];
+    });
+    var s = document.getElementById('lang-switcher');
+    if (s) s.value = lang;
+    btn.textContent = lang === 'es' ? 'English' : 'Español';
   });
 }());
     </script>
