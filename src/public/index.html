@@ -17,6 +17,7 @@
       .event-card h3 a:hover { text-decoration:underline; }
       .events-disclaimer { margin-top:1.25rem; font-size:.9rem; color:var(--text-muted); }
       .rank-insignia { display:block; width:72px; height:72px; object-fit:contain; margin-bottom:.5rem; border-radius:var(--radius); background:var(--navy-dark); }
+      #lang-switcher { background:transparent; color:inherit; border:1px solid rgba(255,255,255,.4); border-radius:4px; padding:.2rem .4rem; font-size:.85rem; cursor:pointer; }
     </style>
   </head>
   <body>
@@ -31,7 +32,7 @@
           <path d="M16 1 L30 7 L30 19 C30 26 16 31 16 31 C16 31 2 26 2 19 L2 7 Z" fill="#1b4332" stroke="#d4a017" stroke-width="1.5" stroke-linejoin="round"/>
           <polygon points="16,9 17.6,14 22.5,14 18.7,17 20.3,22 16,19 11.7,22 13.3,17 9.5,14 14.4,14" fill="#d4a017"/>
         </svg>
-        <span class="nav-brand-name">California Cadet Corps</span>
+        <span class="nav-brand-name" data-i18n="heading">California Cadet Corps</span>
       </a>
 
       <ul class="nav-links" id="nav-links" role="list">
@@ -41,6 +42,13 @@
         <li><a href="#events">Events</a></li>
         <li><a href="#new-cadet">New Cadet</a></li>
       </ul>
+
+      <select id="lang-switcher" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="zh">中文</option>
+        <option value="de">Deutsch</option>
+      </select>
 
       <button
         class="nav-toggle"
@@ -66,7 +74,7 @@
         />
         <p class="hero-eyebrow">Est. 1911</p>
         <img src="/cacc-logo.svg" alt="California Cadet Corps logo" width="120" height="120" />
-<p class="hero-tagline">Developing Leaders Since 1911</p>
+<p class="hero-tagline" data-i18n="tagline">Developing Leaders Since 1911</p>
         <a class="cta-btn" href="#about">
           Start Here &darr;
         </a>
@@ -491,5 +499,6 @@
     </footer>
 
     <script src="/app.js" defer type="module"></script>
+    <script src="/i18n.js"></script>
   </body>
 </html>
