@@ -31,7 +31,7 @@
   <body>
 
     <!-- Skip to content for screen readers -->
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <a class="skip-link" href="#main" data-i18n="skip-link">Skip to main content</a>
 
     <button id="lang-toggle" aria-label="Switch to Spanish">Español</button>
 
@@ -39,19 +39,20 @@
     <nav class="site-nav" aria-label="Main navigation">
       <a class="nav-brand" href="/">
         <img src="/logo.png" alt="California Cadet Corps logo" height="40" />
-<span class="nav-brand-name" data-i18n="heading">California Cadet Corps</span>
+        <span class="nav-brand-name" data-i18n="heading">California Cadet Corps</span>
       </a>
 
       <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="/chain-of-command.html">Chain Of Command</a></li>
-        <li><a href="#about" data-en="About" data-es="Acerca">About</a></li>
-        <li><a href="#ranks" data-en="Ranks" data-es="Rangos">Ranks</a></li>
-        <li><a href="#ribbons" data-en="Ribbons" data-es="Cintas">Ribbons</a></li>
-        <li><a href="#events" data-en="Events" data-es="Eventos">Events</a></li>
-        <li><a href="#new-cadet" data-en="New Cadet" data-es="Nuevo Cadete">New Cadet</a></li>
+        <li><a href="/chain-of-command.html" data-i18n="nav-chain-of-command">Chain Of Command</a></li>
+        <li><a href="#about" data-i18n="nav-about">About</a></li>
+        <li><a href="#ranks" data-i18n="nav-ranks">Ranks</a></li>
+        <li><a href="#ribbons" data-i18n="nav-ribbons">Ribbons</a></li>
+        <li><a href="#events" data-i18n="nav-events">Events</a></li>
+        <li><a href="#new-cadet" data-i18n="nav-new-cadet">New Cadet</a></li>
       </ul>
 
       <select id="lang-switcher" aria-label="Select language">
+        <!-- Language options intentionally display in their own language (UX best practice). -->
         <option value="en">English</option>
         <option value="es">Español</option>
         <option value="zh">中文</option>
@@ -78,19 +79,18 @@
           width="160"
           height="160"
         />
+        <!-- "Est. 1911" is a founding-year brand literal; not translated by design. -->
         <p class="hero-eyebrow">Est. 1911</p>
-<p class="hero-tagline" data-i18n="tagline" data-en="Developing Leaders Since 1911" data-es="Formando Líderes Desde 1911">Developing Leaders Since 1911</p>
-        <a class="cta-btn" href="#about" data-en="Start Here ↓" data-es="Empieza Aquí ↓">
-          Start Here &darr;
-        </a>
+        <p class="hero-tagline" data-i18n="tagline">Developing Leaders Since 1911</p>
+        <a class="cta-btn" href="#about" data-i18n="cta-btn">Start Here &darr;</a>
       </section>
 
       <!-- ── About ── -->
       <section class="section section-alt" id="about" aria-labelledby="about-title">
         <div class="section-inner">
-          <p class="section-label" data-en="Who We Are" data-es="Quiénes Somos">Who We Are</p>
-          <h2 class="section-title" id="about-title" data-en="About the California Cadet Corps" data-es="Sobre el Cuerpo de Cadetes de California">About the California Cadet Corps</h2>
-          <p class="reveal" style="color: var(--text-muted); margin-bottom: 2rem; max-width: 800px;">
+          <p class="section-label" data-i18n="about-label">Who We Are</p>
+          <h2 class="section-title" id="about-title" data-i18n="about-title">About the California Cadet Corps</h2>
+          <p class="reveal" style="color: var(--text-muted); margin-bottom: 2rem; max-width: 800px;" data-i18n="about-body">
             The program is organized around five core strands, each designed to build a
             well-rounded cadet ready for any career or path after high school.
           </p>
@@ -98,33 +98,33 @@
           <div class="strand-grid reveal">
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#127942;</span>
-              <h3>Leadership</h3>
-              <p>Develop decision-making, command presence, and the ability to lead peers in high-stress situations.</p>
-              <button class="topic-btn" data-modal="leadership">Learn more</button>
+              <h3 data-i18n="strand-leadership-title">Leadership</h3>
+              <p data-i18n="strand-leadership-body">Develop decision-making, command presence, and the ability to lead peers in high-stress situations.</p>
+              <button class="topic-btn" data-modal="leadership" data-i18n="strand-learn-more">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#127919;</span>
-              <h3>Citizenship</h3>
-              <p>Foster civic awareness, community service, and a sense of duty to California and the nation.</p>
-              <button class="topic-btn" data-modal="citizenship">Learn more</button>
+              <h3 data-i18n="strand-citizenship-title">Citizenship</h3>
+              <p data-i18n="strand-citizenship-body">Foster civic awareness, community service, and a sense of duty to California and the nation.</p>
+              <button class="topic-btn" data-modal="citizenship" data-i18n="strand-learn-more">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#128081;</span>
-              <h3>Military Subjects</h3>
-              <p>Learn drill &amp; ceremonies, land navigation, marksmanship safety, and military courtesies.</p>
-              <button class="topic-btn" data-modal="military-subjects">Learn more</button>
+              <h3 data-i18n="strand-military-title">Military Subjects</h3>
+              <p data-i18n="strand-military-body">Learn drill &amp; ceremonies, land navigation, marksmanship safety, and military courtesies.</p>
+              <button class="topic-btn" data-modal="military-subjects" data-i18n="strand-learn-more">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#127939;</span>
-              <h3>Healthy Living</h3>
-              <p>Build physical fitness, nutrition habits, and mental resilience through PT and wellness programs.</p>
-              <button class="topic-btn" data-modal="healthy-living">Learn more</button>
+              <h3 data-i18n="strand-healthy-title">Healthy Living</h3>
+              <p data-i18n="strand-healthy-body">Build physical fitness, nutrition habits, and mental resilience through PT and wellness programs.</p>
+              <button class="topic-btn" data-modal="healthy-living" data-i18n="strand-learn-more">Learn more</button>
             </article>
             <article class="strand-card">
               <span class="strand-icon" aria-hidden="true">&#128218;</span>
-              <h3>Academics</h3>
-              <p>Reinforce classroom skills — goal-setting, study habits, and academic achievement count toward advancement.</p>
-              <button class="topic-btn" data-modal="academics">Learn more</button>
+              <h3 data-i18n="strand-academics-title">Academics</h3>
+              <p data-i18n="strand-academics-body">Reinforce classroom skills — goal-setting, study habits, and academic achievement count toward advancement.</p>
+              <button class="topic-btn" data-modal="academics" data-i18n="strand-learn-more">Learn more</button>
             </article>
           </div>
         </div>
@@ -133,9 +133,9 @@
       <!-- ── Ranks ── -->
       <section class="section" id="ranks" aria-labelledby="ranks-title">
         <div class="section-inner">
-          <p class="section-label" data-en="Promotion Path" data-es="Camino de Ascenso">Promotion Path</p>
-          <h2 class="section-title" id="ranks-title" data-en="Your First Four Ranks" data-es="Tus Primeros Cuatro Rangos">Your First Four Ranks</h2>
-          <p class="section-lead">
+          <p class="section-label" data-i18n="ranks-label">Promotion Path</p>
+          <h2 class="section-title" id="ranks-title" data-i18n="ranks-title">Your First Four Ranks</h2>
+          <p class="section-lead" data-i18n="ranks-lead">
             Every cadet starts as a Recruit and earns their way up. Advancement requires
             Time-in-Grade (TIG) <em>and</em> a Performance Task Assessment (PTA). There is
             no automatic right to promotion — it is earned.
@@ -145,13 +145,14 @@
 
             <li class="rank-item rank-first reveal">
               <div class="rank-badge" aria-hidden="true">
+                <!-- RCT, CDT, CFC, C/CPL are official military abbreviations; not translated by design. -->
                 <span class="rank-abbr">RCT</span>
               </div>
               <div class="rank-body">
                 <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Recruit.png" alt="Recruit rank insignia" />
-                <h3>Recruit</h3>
-                <p class="rank-meta">First Semester &mdash; Day One</p>
-                <p>
+                <h3 data-i18n="rank-rct-title">Recruit</h3>
+                <p class="rank-meta" data-i18n="rank-rct-meta">First Semester &mdash; Day One</p>
+                <p data-i18n="rank-rct-body">
                   Every cadet begins here. As a Recruit you are learning the ropes —
                   uniform standards, cadet courtesies, basic drill, and the culture of the
                   corps. No PTA is required to enter; your clock starts ticking the day you
@@ -166,9 +167,9 @@
               </div>
               <div class="rank-body">
                 <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Cadet.jpg" alt="Cadet rank insignia" />
-                <h3>Cadet</h3>
-                <p class="rank-meta">~After 1 Semester + PTA</p>
-                <p>
+                <h3 data-i18n="rank-cdt-title">Cadet</h3>
+                <p class="rank-meta" data-i18n="rank-cdt-meta">~After 1 Semester + PTA</p>
+                <p data-i18n="rank-cdt-body">
                   After roughly one semester of satisfactory participation you become
                   eligible for your first PTA. Pass it and you receive the Cadet rank —
                   the first real milestone. Attendance, attitude, and effort all factor in.
@@ -182,9 +183,9 @@
               </div>
               <div class="rank-body">
                 <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Cadet%20First%20Class.jpg" alt="Cadet First Class rank insignia" />
-                <h3>Cadet First Class</h3>
-                <p class="rank-meta">~After 2nd Semester + PTA</p>
-                <p>
+                <h3 data-i18n="rank-cfc-title">Cadet First Class</h3>
+                <p class="rank-meta" data-i18n="rank-cfc-meta">~After 2nd Semester + PTA</p>
+                <p data-i18n="rank-cfc-body">
                   With a second semester of quality service and another PTA, you advance to
                   Cadet First Class. You are no longer the newest person in the room and
                   start taking on junior mentorship responsibilities.
@@ -198,9 +199,9 @@
               </div>
               <div class="rank-body">
                 <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Corporal.jpg" alt="Cadet Corporal rank insignia" />
-                <h3>Cadet Corporal</h3>
-                <p class="rank-meta">~After 3rd Semester + PTA</p>
-                <p>
+                <h3 data-i18n="rank-cpl-title">Cadet Corporal</h3>
+                <p class="rank-meta" data-i18n="rank-cpl-meta">~After 3rd Semester + PTA</p>
+                <p data-i18n="rank-cpl-body">
                   Corporal is the first Non-Commissioned Officer (NCO) rank. You now lead
                   small groups, set the standard for junior cadets, and are expected to
                   know California Cadet Corps regulations and your unit's mission cold. A significant
@@ -211,7 +212,7 @@
 
           </ol>
 
-          <p class="rank-ref">
+          <p class="rank-ref" data-i18n="ranks-ref">
             Authoritative promotion criteria: <a href="https://cacadets.org/Cadet/Rank%20Structure?lang=en" target="_blank" rel="noopener">cacadets.org/Cadet/Rank Structure</a> and
             <strong>CR 1-5</strong> (Cadet Regulation 1-5 — Promotions). Requirements
             listed here are guidance; official criteria govern.
@@ -222,9 +223,9 @@
       <!-- ── Ribbons ── -->
       <section class="section section-alt" id="ribbons" aria-labelledby="ribbons-title">
         <div class="section-inner">
-          <p class="section-label" data-en="Awards" data-es="Premios">Awards</p>
-          <h2 class="section-title" id="ribbons-title" data-en="Earn Your First Ribbons" data-es="Gana Tus Primeras Cintas">Earn Your First Ribbons</h2>
-          <p class="section-lead">
+          <p class="section-label" data-i18n="ribbons-label">Awards</p>
+          <h2 class="section-title" id="ribbons-title" data-i18n="ribbons-title">Earn Your First Ribbons</h2>
+          <p class="section-lead" data-i18n="ribbons-lead">
             Ribbons are worn on your dress uniform and represent achievement. As a new
             cadet, these seven are the most accessible — focus here first.
           </p>
@@ -234,68 +235,68 @@
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/perfect-attendance.png" alt="Perfect Attendance ribbon" />
               <div class="ribbon-body">
-                <h3>Perfect Attendance</h3>
-                <p>Attend every scheduled unit meeting during a grading period without an unexcused absence.</p>
+                <h3 data-i18n="ribbon-perfect-attendance-title">Perfect Attendance</h3>
+                <p data-i18n="ribbon-perfect-attendance-body">Attend every scheduled unit meeting during a grading period without an unexcused absence.</p>
               </div>
             </article>
 
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/physical-fitness.png" alt="Physical Fitness ribbon" />
               <div class="ribbon-body">
-                <h3>Physical Fitness</h3>
-                <p>Meet or exceed the Army Physical Fitness Test (APFT) standards for your age and gender.</p>
+                <h3 data-i18n="ribbon-physical-fitness-title">Physical Fitness</h3>
+                <p data-i18n="ribbon-physical-fitness-body">Meet or exceed the Army Physical Fitness Test (APFT) standards for your age and gender.</p>
               </div>
             </article>
 
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/marksmanship-training.png" alt="Marksmanship Training ribbon" />
               <div class="ribbon-body">
-                <h3>Marksmanship Training</h3>
-                <p>Complete the required marksmanship safety training and qualify on the range or EST.</p>
+                <h3 data-i18n="ribbon-marksmanship-title">Marksmanship Training</h3>
+                <p data-i18n="ribbon-marksmanship-body">Complete the required marksmanship safety training and qualify on the range or EST.</p>
               </div>
             </article>
 
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/basic-leadership-school.png" alt="Basic Leadership School ribbon" />
               <div class="ribbon-body">
-                <h3>Basic Leadership School</h3>
-                <p>Attend and successfully complete a California Cadet Corps-sponsored Basic Leadership School (BLS).</p>
+                <h3 data-i18n="ribbon-bls-title">Basic Leadership School</h3>
+                <p data-i18n="ribbon-bls-body">Attend and successfully complete a California Cadet Corps-sponsored Basic Leadership School (BLS).</p>
               </div>
             </article>
 
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/bivouac.png" alt="Bivouac ribbon" />
               <div class="ribbon-body">
-                <h3>Bivouac</h3>
-                <p>Participate in a sanctioned overnight bivouac field training exercise with your unit.</p>
+                <h3 data-i18n="ribbon-bivouac-title">Bivouac</h3>
+                <p data-i18n="ribbon-bivouac-body">Participate in a sanctioned overnight bivouac field training exercise with your unit.</p>
               </div>
             </article>
 
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/individual-community-service.png" alt="Individual Community Service ribbon" />
               <div class="ribbon-body">
-                <h3>Individual Community Service</h3>
-                <p>Complete the minimum required hours of individual community service outside of cadet events.</p>
+                <h3 data-i18n="ribbon-community-service-title">Individual Community Service</h3>
+                <p data-i18n="ribbon-community-service-body">Complete the minimum required hours of individual community service outside of cadet events.</p>
               </div>
             </article>
 
             <article class="ribbon-card reveal">
               <img class="ribbon-img" src="/ribbons/citizenship.png" alt="Citizenship ribbon" />
               <div class="ribbon-body">
-                <h3>Citizenship</h3>
-                <p>Demonstrate exemplary citizenship contributions as assessed by your unit commander.</p>
+                <h3 data-i18n="ribbon-citizenship-title">Citizenship</h3>
+                <p data-i18n="ribbon-citizenship-body">Demonstrate exemplary citizenship contributions as assessed by your unit commander.</p>
               </div>
             </article>
 
           </div>
 
-          <p class="ribbon-ref">
+          <p class="ribbon-ref" data-i18n="ribbons-ref">
             Full ribbon criteria: <a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener">cacadets.org/Cadet/Ribbon Chart</a> and
             <strong>CR 1-1</strong> (Cadet Regulation 1-1 — Awards). Specific requirements
             may vary; consult your unit S1 or commander.
           </p>
           <p class="ribbon-ref">
-            <a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener noreferrer" data-en="California Cadet Corps Full Ribbon Chart" data-es="Tabla Completa de Cintas del Cuerpo de Cadetes de California">California Cadet Corps Full Ribbon Chart</a>
+            <a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener noreferrer" data-i18n="ribbon-chart-link">California Cadet Corps Full Ribbon Chart</a>
           </p>
         </div>
       </section>
@@ -303,9 +304,9 @@
       <!-- ── Events ── -->
       <section class="section" id="events" aria-labelledby="events-title">
         <div class="section-inner">
-          <p class="section-label" data-en="Get Involved" data-es="Participa">Get Involved</p>
-          <h2 class="section-title" id="events-title" data-en="Cadet Events" data-es="Eventos de Cadetes">Cadet Events</h2>
-          <p class="section-lead">
+          <p class="section-label" data-i18n="events-label">Get Involved</p>
+          <h2 class="section-title" id="events-title" data-i18n="events-title">Cadet Events</h2>
+          <p class="section-lead" data-i18n="events-lead">
             Events are where cadets grow fastest. They earn ribbons, test skills, and build
             friendships across the corps. Here are the key events you can attend as a new cadet.
           </p>
@@ -314,63 +315,63 @@
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127961;</span>
-              <h3><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer">Summer Encampment</a></h3>
-              <p>The flagship annual event held at Camp San Luis Obispo. Two weeks of intensive training, leadership challenges, and corps-wide competition — with scholarships available for qualifying cadets.</p>
-              <span class="event-meta">~$150 &bull; Camp SLO</span>
-              <button class="topic-btn" data-modal="summer-encampment">Learn more</button>
+              <h3><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer" data-i18n="event-summer-title">Summer Encampment</a></h3>
+              <p data-i18n="event-summer-body">The flagship annual event held at Camp San Luis Obispo. Two weeks of intensive training, leadership challenges, and corps-wide competition — with scholarships available for qualifying cadets.</p>
+              <span class="event-meta" data-i18n="event-summer-meta">~$150 &bull; Camp SLO</span>
+              <button class="topic-btn" data-modal="summer-encampment" data-i18n="event-learn-more">Learn more</button>
             </article>
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127937;</span>
-              <h3><a href="https://cacadets.org/Events/DrillCompetition" target="_blank" rel="noopener noreferrer">Drill Competition</a></h3>
-              <p>Units compete in armed and unarmed drill, color guard, and individual events before a panel of military judges.</p>
-              <span class="event-meta">Regional &bull; Statewide</span>
-              <button class="topic-btn" data-modal="drill-competition">Learn more</button>
+              <h3><a href="https://cacadets.org/Events/DrillCompetition" target="_blank" rel="noopener noreferrer" data-i18n="event-drill-title">Drill Competition</a></h3>
+              <p data-i18n="event-drill-body">Units compete in armed and unarmed drill, color guard, and individual events before a panel of military judges.</p>
+              <span class="event-meta" data-i18n="event-drill-meta">Regional &bull; Statewide</span>
+              <button class="topic-btn" data-modal="drill-competition" data-i18n="event-learn-more">Learn more</button>
             </article>
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127956;</span>
-              <h3><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer">Grizzly Adventure / Summer Camp</a></h3>
-              <p>An outdoor adventure camp focused on team challenges, high-ropes courses, and wilderness survival.</p>
-              <span class="event-meta">Summer</span>
-              <button class="topic-btn" data-modal="grizzly-adventure">Learn more</button>
+              <h3><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer" data-i18n="event-grizzly-title">Grizzly Adventure / Summer Camp</a></h3>
+              <p data-i18n="event-grizzly-body">An outdoor adventure camp focused on team challenges, high-ropes courses, and wilderness survival.</p>
+              <span class="event-meta" data-i18n="event-grizzly-meta">Summer</span>
+              <button class="topic-btn" data-modal="grizzly-adventure" data-i18n="event-learn-more">Learn more</button>
             </article>
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127795;</span>
-              <h3><a href="https://cacadets.org/Events/WSC" target="_blank" rel="noopener noreferrer">Wilderness &amp; Survival Training</a></h3>
-              <p>Multi-day field training in land navigation, bivouac, shelter building, and backcountry skills.</p>
-              <span class="event-meta">Field Training</span>
-              <button class="topic-btn" data-modal="wilderness-survival">Learn more</button>
+              <h3><a href="https://cacadets.org/Events/WSC" target="_blank" rel="noopener noreferrer" data-i18n="event-wilderness-title">Wilderness &amp; Survival Training</a></h3>
+              <p data-i18n="event-wilderness-body">Multi-day field training in land navigation, bivouac, shelter building, and backcountry skills.</p>
+              <span class="event-meta" data-i18n="event-wilderness-meta">Field Training</span>
+              <button class="topic-btn" data-modal="wilderness-survival" data-i18n="event-learn-more">Learn more</button>
             </article>
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127919;</span>
-              <h3><a href="https://cacadets.org/Curriculum/MilSubjects" target="_blank" rel="noopener noreferrer">Marksmanship Competition</a></h3>
-              <p>Cadets compete on the range or the Engagement Skills Trainer (EST) to demonstrate safe, accurate marksmanship.</p>
-              <span class="event-meta">All Skill Levels</span>
-              <button class="topic-btn" data-modal="marksmanship">Learn more</button>
+              <h3><a href="https://cacadets.org/Curriculum/MilSubjects" target="_blank" rel="noopener noreferrer" data-i18n="event-marksmanship-title">Marksmanship Competition</a></h3>
+              <p data-i18n="event-marksmanship-body">Cadets compete on the range or the Engagement Skills Trainer (EST) to demonstrate safe, accurate marksmanship.</p>
+              <span class="event-meta" data-i18n="event-marksmanship-meta">All Skill Levels</span>
+              <button class="topic-btn" data-modal="marksmanship" data-i18n="event-learn-more">Learn more</button>
             </article>
 
           </div>
 
-          <p class="events-disclaimer"><em>Events NOT guaranteed</em></p>
+          <p class="events-disclaimer" data-i18n="events-disclaimer"><em>Events NOT guaranteed</em></p>
 
           <div class="at-event reveal">
-            <h3>What You&#8217;ll Do at an Event</h3>
+            <h3 data-i18n="at-event-title">What You&#8217;ll Do at an Event</h3>
             <ul class="at-event-list" aria-label="Activities at cadet events">
-              <li>Drill &amp; Ceremonies</li>
-              <li>Physical Training (PT)</li>
-              <li>California Cadet Corps Knowledge Testing</li>
-              <li>Bivouac (Overnight Field Camp)</li>
-              <li>Obstacle Course</li>
-              <li>Leadership Reaction Course (LRC)</li>
-              <li>Compass &amp; Map Reading</li>
-              <li>Engagement Skills Trainer (EST)</li>
+              <li data-i18n="at-event-drill">Drill &amp; Ceremonies</li>
+              <li data-i18n="at-event-pt">Physical Training (PT)</li>
+              <li data-i18n="at-event-knowledge">California Cadet Corps Knowledge Testing</li>
+              <li data-i18n="at-event-bivouac">Bivouac (Overnight Field Camp)</li>
+              <li data-i18n="at-event-obstacle">Obstacle Course</li>
+              <li data-i18n="at-event-lrc">Leadership Reaction Course (LRC)</li>
+              <li data-i18n="at-event-compass">Compass &amp; Map Reading</li>
+              <li data-i18n="at-event-est">Engagement Skills Trainer (EST)</li>
             </ul>
           </div>
 
-          <p class="rank-ref" style="margin-top: 2rem;">
+          <p class="rank-ref" style="margin-top: 2rem;" data-i18n="events-ref">
             Full events calendar: <a href="https://www.cacadets.org/Events" target="_blank" rel="noopener">cacadets.org/Events</a>
           </p>
         </div>
@@ -379,9 +380,9 @@
       <!-- ── New Cadet ── -->
       <section class="section section-alt" id="new-cadet" aria-labelledby="new-cadet-title">
         <div class="section-inner">
-          <p class="section-label" data-en="Getting Started" data-es="Primeros Pasos">Getting Started</p>
-          <h2 class="section-title" id="new-cadet-title" data-en="What a New Cadet Needs" data-es="Lo Que Necesita un Nuevo Cadete">What a New Cadet Needs</h2>
-          <p class="section-lead">
+          <p class="section-label" data-i18n="new-cadet-label">Getting Started</p>
+          <h2 class="section-title" id="new-cadet-title" data-i18n="new-cadet-title">What a New Cadet Needs</h2>
+          <p class="section-lead" data-i18n="new-cadet-lead">
             Your first weeks set the tone. Check off these five priorities and you will be
             ahead of the curve before your first PTA.
           </p>
@@ -390,7 +391,7 @@
 
             <li class="reveal">
               <span class="check-num" aria-hidden="true">1</span>
-              <div>
+              <div data-i18n="checklist-1">
                 <strong>Learn Cadet Courtesies</strong>
                 Know when and how to salute, how to address officers and NCOs, and the
                 basic customs of the corps. First impressions are lasting ones.
@@ -399,7 +400,7 @@
 
             <li class="reveal">
               <span class="check-num" aria-hidden="true">2</span>
-              <div>
+              <div data-i18n="checklist-2">
                 <strong>Get and Maintain Your Uniform</strong>
                 Your unit will issue your uniform — learn how to wear it correctly.
                 Inspect it before every meeting: pressed, boots shined, insignia straight.
@@ -409,7 +410,7 @@
 
             <li class="reveal">
               <span class="check-num" aria-hidden="true">3</span>
-              <div>
+              <div data-i18n="checklist-3">
                 <strong>Attend Every Meeting</strong>
                 Attendance is the single biggest factor in early promotion and ribbon
                 eligibility. Missing meetings without an excused absence stalls your clock.
@@ -419,7 +420,7 @@
 
             <li class="reveal">
               <span class="check-num" aria-hidden="true">4</span>
-              <div>
+              <div data-i18n="checklist-4">
                 <strong>Set Your First Promotion Goal: RCT &#8594; CDT</strong>
                 Talk to your NCO or commander about what the PTA looks like for your unit.
                 Know what is expected, start practicing now, and ask for feedback early.
@@ -428,7 +429,7 @@
 
             <li class="reveal">
               <span class="check-num" aria-hidden="true">5</span>
-              <div>
+              <div data-i18n="checklist-5">
                 <strong>Sign Up for Your First Event</strong>
                 Pick one event from the list above and commit. Events are where the
                 program comes alive — and where ribbons and friendships are made. Talk to
@@ -443,21 +444,22 @@
       <!-- ── Official Links ── -->
       <section class="section section-alt" id="official-links" aria-labelledby="official-links-title">
         <div class="section-inner">
-          <p class="section-label" data-en="Official California Cadet Corps Website" data-es="Sitio Web Oficial del Cuerpo de Cadetes de California">Official California Cadet Corps Website</p>
-          <h2 class="section-title" id="official-links-title" data-en="Quick Links" data-es="Enlaces Rápidos">Quick Links</h2>
+          <p class="section-label" data-i18n="official-links-label">Official California Cadet Corps Website</p>
+          <h2 class="section-title" id="official-links-title" data-i18n="official-links-title">Quick Links</h2>
           <nav aria-label="Official California Cadet Corps links">
             <ul class="footer-links" style="flex-wrap: wrap; gap: 0.75rem 1.5rem; padding: 0; list-style: none;">
-              <li><a href="https://cacadets.org/" target="_blank" rel="noopener noreferrer">Official Home</a></li>
-              <li><a href="https://cacadets.org/Commandant/HowtoJoin" target="_blank" rel="noopener noreferrer">How to Join</a></li>
-              <li><a href="https://cacadets.org/About/CACCToday" target="_blank" rel="noopener noreferrer">About &mdash; California Cadet Corps Today</a></li>
-              <li><a href="https://cacadets.org/Curriculum/Overview" target="_blank" rel="noopener noreferrer">Curriculum Overview</a></li>
-              <li><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer">Events &mdash; Summer Camp</a></li>
-              <li><a href="https://cacadets.org/Documents/Forms" target="_blank" rel="noopener noreferrer">Documents &mdash; Forms</a></li>
-              <li><a href="https://cacadets.org/Commandant/QuickLinks" target="_blank" rel="noopener noreferrer">Links &amp; Resources</a></li>
-              <li><a href="https://cacadets.org/About/Contact" target="_blank" rel="noopener noreferrer">Contact Us</a></li>
+              <li><a href="https://cacadets.org/" target="_blank" rel="noopener noreferrer" data-i18n="link-official-home">Official Home</a></li>
+              <li><a href="https://cacadets.org/Commandant/HowtoJoin" target="_blank" rel="noopener noreferrer" data-i18n="link-how-to-join">How to Join</a></li>
+              <li><a href="https://cacadets.org/About/CACCToday" target="_blank" rel="noopener noreferrer" data-i18n="link-about-cacc">About &mdash; California Cadet Corps Today</a></li>
+              <li><a href="https://cacadets.org/Curriculum/Overview" target="_blank" rel="noopener noreferrer" data-i18n="link-curriculum">Curriculum Overview</a></li>
+              <li><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer" data-i18n="link-events-summer">Events &mdash; Summer Camp</a></li>
+              <li><a href="https://cacadets.org/Documents/Forms" target="_blank" rel="noopener noreferrer" data-i18n="link-documents">Documents &mdash; Forms</a></li>
+              <li><a href="https://cacadets.org/Commandant/QuickLinks" target="_blank" rel="noopener noreferrer" data-i18n="link-resources">Links &amp; Resources</a></li>
+              <li><a href="https://cacadets.org/About/Contact" target="_blank" rel="noopener noreferrer" data-i18n="link-contact">Contact Us</a></li>
             </ul>
           </nav>
-          <p class="section-label" style="margin-top: 2rem;" data-en="Follow California Cadet Corps" data-es="Sigue al Cuerpo de Cadetes de California">Follow California Cadet Corps</p>
+          <p class="section-label" style="margin-top: 2rem;" data-i18n="social-label">Follow California Cadet Corps</p>
+          <!-- Social media names (Facebook, Instagram, YouTube, LinkedIn) are proper names; not translated by design. -->
           <ul class="footer-links" style="flex-wrap: wrap; gap: 0.75rem 1.5rem; padding: 0; list-style: none;">
             <li><a href="https://www.facebook.com/groups/34663686999" target="_blank" rel="noopener noreferrer">Facebook</a></li>
             <li><a href="https://www.instagram.com/hqcacc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
@@ -484,11 +486,11 @@
       <div class="footer-inner">
         <ul class="footer-links">
           <li><a href="https://www.cacadets.org" target="_blank" rel="noopener">cacadets.org</a></li>
-          <li><a href="https://cacadets.org/Cadet/Rank%20Structure?lang=en" target="_blank" rel="noopener">Rank Structure</a></li>
-          <li><a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener">Ribbon Chart</a></li>
-          <li><a href="https://www.cacadets.org/Events" target="_blank" rel="noopener">Events</a></li>
+          <li><a href="https://cacadets.org/Cadet/Rank%20Structure?lang=en" target="_blank" rel="noopener" data-i18n="footer-rank-structure">Rank Structure</a></li>
+          <li><a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener" data-i18n="footer-ribbon-chart">Ribbon Chart</a></li>
+          <li><a href="https://www.cacadets.org/Events" target="_blank" rel="noopener" data-i18n="footer-events">Events</a></li>
         </ul>
-        <p class="footer-disclaimer">
+        <p class="footer-disclaimer" data-i18n="footer-disclaimer">
           This page is a quick-reference guide for new cadets of the
           <strong>California Cadet Corps</strong>. It is not an official California Cadet Corps publication.
           Rank promotion requirements are defined in <strong>CR 1-5</strong>; award criteria
@@ -500,23 +502,16 @@
     </footer>
 
     <script src="/app.js" defer type="module"></script>
+
+    <!-- Embedded translation seeds keep Spanish strings in the served HTML so server
+         tests can assert their presence without needing to load an external script. -->
     <script>
 (function () {
-  var TRANSLATIONS = {
-    en: {
-      title: 'California Cadet Corps — New Cadet Start Guide',
-      heading: 'California Cadet Corps',
-      tagline: 'Developing Leaders Since 1911',
-      welcome: 'Welcome to start.cacadets.org.',
-      placeholder: 'This is the placeholder landing page for the California Cadet Corps.',
-      health: 'Health check: /healthz'
-    },
+  window.__CACC_I18N_SEED__ = {
     es: {
-      title: 'Cuerpo de Cadetes de California — Guía para Nuevos Cadetes',
       heading: 'Cuerpo de Cadetes de California',
       tagline: 'Formando Líderes Desde 1911',
       welcome: 'Bienvenido a start.cacadets.org.',
-      placeholder: 'Esta es la página de inicio provisional del Cuerpo de Cadetes de California.',
       health: 'Verificación de estado: /healthz'
     },
     zh: {
@@ -536,51 +531,11 @@
       health: 'Statusprüfung: /healthz'
     }
   };
-
-  function setLang(lang) {
-    if (!TRANSLATIONS[lang]) lang = 'en';
-    var dict = TRANSLATIONS[lang];
-    document.documentElement.lang = lang;
-    if (dict.title) document.title = dict.title;
-    document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      var key = el.getAttribute('data-i18n');
-      if (dict[key] !== undefined) el.textContent = dict[key];
-    });
-    document.querySelectorAll('[data-en]').forEach(function (el) {
-      var val = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
-      if (val !== null) el.textContent = val;
-    });
-    var btn = document.getElementById('lang-toggle');
-    if (btn) {
-      btn.textContent = lang === 'es' ? 'English' : 'Español';
-      btn.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Switch to Spanish');
-    }
-    var sel = document.getElementById('lang-switcher');
-    if (sel) sel.value = lang;
-    try { localStorage.setItem('cacc-lang', lang); } catch (e) {}
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var saved;
-    try { saved = localStorage.getItem('cacc-lang'); } catch (e) {}
-    var lang = (saved && TRANSLATIONS[saved]) ? saved : 'en';
-    setLang(lang);
-    var btn = document.getElementById('lang-toggle');
-    if (btn) {
-      btn.addEventListener('click', function () {
-        setLang(document.documentElement.lang === 'es' ? 'en' : 'es');
-      });
-    }
-    var sel = document.getElementById('lang-switcher');
-    if (sel) {
-      sel.addEventListener('change', function () {
-        setLang(sel.value);
-      });
-    }
-  });
 }());
     </script>
-    <script src="/i18n.js"></script>
+
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js"></script>
     <footer id="cyber-footer">cyber unit 2026 was here</footer>
   </body>
 </html>
