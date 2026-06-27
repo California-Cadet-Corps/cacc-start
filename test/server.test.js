@@ -192,3 +192,32 @@ test('GET / does not contain barracks inspection or alpine tower content', async
   assert.doesNotMatch(text, /tower\s+climb/i, 'page must not mention tower climbing');
   await new Promise((resolve) => server.close(resolve));
 });
+
+test('GET / events section: titles link to cacadets.org and disclaimer is present', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /Events NOT guaranteed/, 'events disclaimer must be present');
+  assert.match(text, /<em>Events NOT guaranteed<\/em>/, 'disclaimer must be italicized with <em>');
+  assert.match(text, /href="https:\/\/cacadets\.org\/Events\/SummerCamp"/, 'Summer Encampment must link to SummerCamp page');
+  assert.match(text, /href="https:\/\/cacadets\.org\/Events\/DrillCompetition"/, 'Drill Competition must link to DrillCompetition page');
+  assert.match(text, /href="https:\/\/cacadets\.org\/Events\/WSC"/, 'Wilderness training must link to WSC page');
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET / promotion path section: rank insignia images with alt text are present', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /class="rank-insignia"/, 'rank insignia images must be present');
+  assert.match(text, /alt="Recruit rank insignia"/, 'Recruit rank image must have descriptive alt text');
+  assert.match(text, /alt="Cadet rank insignia"/, 'Cadet rank image must have descriptive alt text');
+  assert.match(text, /alt="Cadet First Class rank insignia"/, 'Cadet First Class rank image must have descriptive alt text');
+  assert.match(text, /alt="Cadet Corporal rank insignia"/, 'Cadet Corporal rank image must have descriptive alt text');
+  assert.match(text, /linodeobjects\.com\/Ranks\//, 'rank images must be sourced from cacadets.org image storage');
+  await new Promise((resolve) => server.close(resolve));
+});
