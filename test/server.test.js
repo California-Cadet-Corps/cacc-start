@@ -272,6 +272,8 @@ test('GET / translation toggle covers whole page: Spanish dict strings embedded 
   assert.match(text, /id="lang-toggle"/, 'page must contain lang-toggle element');
   assert.match(text, /Formando L/, 'page must embed at least one Spanish string from the translation dictionary');
   assert.match(text, /Cuerpo de Cadetes de California/, 'Spanish heading must be present in the inline script dictionary');
+  assert.match(text, /Bienvenido/, 'page must embed Spanish "Bienvenido" string');
+  assert.match(text, /Verificaci/, 'page must embed Spanish "Verificación" string');
   await new Promise((resolve) => server.close(resolve));
 });
 

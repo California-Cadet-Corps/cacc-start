@@ -504,25 +504,54 @@
     <script src="/app.js" defer type="module"></script>
     <script>
 (function () {
-  var dict = {
-    en: { heading: 'California Cadet Corps', tagline: 'Developing Leaders Since 1911' },
-    es: { heading: 'Cuerpo de Cadetes de California', tagline: 'Formando Líderes Desde 1911' }
+  var TRANSLATIONS = {
+    en: {
+      title: 'California Cadet Corps — New Cadet Start Guide',
+      heading: 'California Cadet Corps',
+      tagline: 'Developing Leaders Since 1911',
+      welcome: 'Welcome to start.cacadets.org.',
+      placeholder: 'This is the placeholder landing page for the California Cadet Corps.',
+      health: 'Health check: /healthz'
+    },
+    es: {
+      title: 'Cuerpo de Cadetes de California — Guía para Nuevos Cadetes',
+      heading: 'Cuerpo de Cadetes de California',
+      tagline: 'Formando Líderes Desde 1911',
+      welcome: 'Bienvenido a start.cacadets.org.',
+      placeholder: 'Esta es la página de inicio provisional del Cuerpo de Cadetes de California.',
+      health: 'Verificación de estado: /healthz'
+    }
   };
-  var btn = document.getElementById('lang-toggle');
-  var lang = 'en';
-  btn.addEventListener('click', function () {
-    lang = lang === 'en' ? 'es' : 'en';
+
+  function setLang(lang) {
+    if (lang !== 'en' && lang !== 'es') lang = 'en';
+    var dict = TRANSLATIONS[lang];
     document.documentElement.lang = lang;
+    if (dict.title) document.title = dict.title;
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
-      if (dict[lang][key] !== undefined) el.textContent = dict[lang][key];
+      if (dict[key] !== undefined) el.textContent = dict[key];
     });
     document.querySelectorAll('[data-en][data-es]').forEach(function (el) {
-      el.textContent = el.dataset[lang];
+      var val = el.getAttribute('data-' + lang);
+      if (val !== null) el.textContent = val;
     });
-    var s = document.getElementById('lang-switcher');
-    if (s) s.value = lang;
-    btn.textContent = lang === 'es' ? 'English' : 'Español';
+    var btn = document.getElementById('lang-toggle');
+    if (btn) btn.textContent = lang === 'es' ? 'English' : 'Español';
+    try { localStorage.setItem('cacc-lang', lang); } catch (e) {}
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var saved;
+    try { saved = localStorage.getItem('cacc-lang'); } catch (e) {}
+    var lang = (saved === 'en' || saved === 'es') ? saved : 'en';
+    setLang(lang);
+    var btn = document.getElementById('lang-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        setLang(document.documentElement.lang === 'es' ? 'en' : 'es');
+      });
+    }
   });
 }());
     </script>
