@@ -154,6 +154,26 @@ test('GET / contains official cacadets.org links and no bare placeholder href', 
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / Ribbon Chart link uses the corrected URL with %20 and no hyphenated Ribbon-Chart link remains', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.match(text, /href="https:\/\/www\.cacadets\.org\/Cadet\/Ribbon%20Chart\?lang=en"/, 'Ribbon Chart href must be exactly https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en');
+  assert.doesNotMatch(text, /cacadets\.org\/Cadet\/Ribbon-Chart/, 'old hyphenated Ribbon-Chart URL must not appear');
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET / contains the Spanish/English language toggle button', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /<button[^>]+id="lang-toggle"[^>]*>Español<\/button>/, 'page must contain the lang-toggle button with label Español');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('GET / contains buttons with data-modal attribute', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
