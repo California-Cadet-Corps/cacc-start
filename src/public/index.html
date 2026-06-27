@@ -13,6 +13,10 @@
       .nav-brand-mark { flex-shrink:0; width:32px; height:32px; }
       .nav-brand-name { font-weight:700; font-size:.9rem; line-height:1.2; white-space:nowrap; }
       .corner-logo { position:fixed; top:12px; left:12px; height:40px; width:auto; z-index:100; }
+      .event-card h3 a { color:inherit; text-decoration:none; }
+      .event-card h3 a:hover { text-decoration:underline; }
+      .events-disclaimer { margin-top:1.25rem; font-size:.9rem; color:var(--text-muted); }
+      .rank-insignia { display:block; width:72px; height:72px; object-fit:contain; margin-bottom:.5rem; border-radius:var(--radius); background:var(--navy-dark); }
     </style>
   </head>
   <body>
@@ -140,6 +144,7 @@
                 <span class="rank-num">E-1</span>
               </div>
               <div class="rank-body">
+                <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Recruit.png" alt="Recruit rank insignia" />
                 <h3>Recruit</h3>
                 <p class="rank-meta">First Semester &mdash; Day One</p>
                 <p>
@@ -157,6 +162,7 @@
                 <span class="rank-num">E-2</span>
               </div>
               <div class="rank-body">
+                <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Cadet.jpg" alt="Cadet rank insignia" />
                 <h3>Cadet</h3>
                 <p class="rank-meta">~After 1 Semester + PTA</p>
                 <p>
@@ -173,6 +179,7 @@
                 <span class="rank-num">E-3</span>
               </div>
               <div class="rank-body">
+                <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Cadet%20First%20Class.jpg" alt="Cadet First Class rank insignia" />
                 <h3>Cadet First Class</h3>
                 <p class="rank-meta">~After 2nd Semester + PTA</p>
                 <p>
@@ -189,6 +196,7 @@
                 <span class="rank-num">E-4</span>
               </div>
               <div class="rank-body">
+                <img class="rank-insignia" src="https://cacc.us-east-1.linodeobjects.com/Ranks/Corporal.jpg" alt="Cadet Corporal rank insignia" />
                 <h3>Cadet Corporal</h3>
                 <p class="rank-meta">~After 3rd Semester + PTA</p>
                 <p>
@@ -305,7 +313,7 @@
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127961;</span>
-              <h3>Summer Encampment</h3>
+              <h3><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer">Summer Encampment</a></h3>
               <p>The flagship annual event held at Camp San Luis Obispo. Two weeks of intensive training, leadership challenges, and corps-wide competition.</p>
               <span class="event-meta">~$150 &bull; Camp SLO</span>
               <button class="topic-btn" data-modal="summer-encampment">Learn more</button>
@@ -313,7 +321,7 @@
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127937;</span>
-              <h3>Drill Competition</h3>
+              <h3><a href="https://cacadets.org/Events/DrillCompetition" target="_blank" rel="noopener noreferrer">Drill Competition</a></h3>
               <p>Units compete in armed and unarmed drill, color guard, and individual events before a panel of military judges.</p>
               <span class="event-meta">Regional &bull; Statewide</span>
               <button class="topic-btn" data-modal="drill-competition">Learn more</button>
@@ -321,7 +329,7 @@
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127956;</span>
-              <h3>Grizzly Adventure / Summer Camp</h3>
+              <h3><a href="https://cacadets.org/Events/SummerCamp" target="_blank" rel="noopener noreferrer">Grizzly Adventure / Summer Camp</a></h3>
               <p>An outdoor adventure camp focused on team challenges, high-ropes courses, and wilderness survival.</p>
               <span class="event-meta">Summer</span>
               <button class="topic-btn" data-modal="grizzly-adventure">Learn more</button>
@@ -329,7 +337,7 @@
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127795;</span>
-              <h3>Wilderness &amp; Survival Training</h3>
+              <h3><a href="https://cacadets.org/Events/WSC" target="_blank" rel="noopener noreferrer">Wilderness &amp; Survival Training</a></h3>
               <p>Multi-day field training in land navigation, bivouac, shelter building, and backcountry skills.</p>
               <span class="event-meta">Field Training</span>
               <button class="topic-btn" data-modal="wilderness-survival">Learn more</button>
@@ -337,13 +345,15 @@
 
             <article class="event-card reveal">
               <span class="event-icon" aria-hidden="true">&#127919;</span>
-              <h3>Marksmanship Competition</h3>
+              <h3><a href="https://cacadets.org/Curriculum/MilSubjects" target="_blank" rel="noopener noreferrer">Marksmanship Competition</a></h3>
               <p>Cadets compete on the range or the Engagement Skills Trainer (EST) to demonstrate safe, accurate marksmanship.</p>
               <span class="event-meta">All Skill Levels</span>
               <button class="topic-btn" data-modal="marksmanship">Learn more</button>
             </article>
 
           </div>
+
+          <p class="events-disclaimer"><em>Events NOT guaranteed</em></p>
 
           <div class="at-event reveal">
             <h3>What You&#8217;ll Do at an Event</h3>
