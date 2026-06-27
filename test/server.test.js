@@ -20,6 +20,7 @@ test('GET / serves the landing page', async () => {
   assert.equal(res.status, 200);
   assert.match(text, /California Cadet Corps/);
   assert.match(text, /California Cadet Corp/);
+  assert.doesNotMatch(text, /<h1>California Cadet Corps<\/h1>/, 'h1 heading text must not appear on page');
   assert.match(text, /logo\.png/);
   assert.match(text, /cacadets\.org\/Cadet\/Ribbon%20Chart\?lang=en/);
   assert.match(text, /rel="icon"/, 'page must declare a favicon link');
