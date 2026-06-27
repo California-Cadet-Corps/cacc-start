@@ -17,12 +17,15 @@
       .event-card h3 a:hover { text-decoration:underline; }
       .events-disclaimer { margin-top:1.25rem; font-size:.9rem; color:var(--text-muted); }
       .rank-insignia { display:block; width:72px; height:72px; object-fit:contain; margin-bottom:.5rem; border-radius:var(--radius); background:var(--navy-dark); }
+      #lang-toggle { position:fixed; top:1rem; right:1rem; z-index:200; padding:.4rem .8rem; border:1px solid currentColor; background:transparent; cursor:pointer; font-size:.9rem; }
     </style>
   </head>
   <body>
 
     <!-- Skip to content for screen readers -->
     <a class="skip-link" href="#main">Skip to main content</a>
+
+    <button id="lang-toggle">Español</button>
 
     <!-- ── Sticky Navigation ── -->
     <nav class="site-nav" aria-label="Main navigation">
@@ -35,11 +38,11 @@
       </a>
 
       <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="#about">About</a></li>
-        <li><a href="#ranks">Ranks</a></li>
-        <li><a href="#ribbons">Ribbons</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#new-cadet">New Cadet</a></li>
+        <li><a href="#about" data-en="About" data-es="Acerca">About</a></li>
+        <li><a href="#ranks" data-en="Ranks" data-es="Rangos">Ranks</a></li>
+        <li><a href="#ribbons" data-en="Ribbons" data-es="Cintas">Ribbons</a></li>
+        <li><a href="#events" data-en="Events" data-es="Eventos">Events</a></li>
+        <li><a href="#new-cadet" data-en="New Cadet" data-es="Nuevo Cadete">New Cadet</a></li>
       </ul>
 
       <button
@@ -66,8 +69,8 @@
         />
         <p class="hero-eyebrow">Est. 1911</p>
         <img src="/cacc-logo.svg" alt="California Cadet Corps logo" width="120" height="120" />
-<p class="hero-tagline">Developing Leaders Since 1911</p>
-        <a class="cta-btn" href="#about">
+<p class="hero-tagline" data-en="Developing Leaders Since 1911" data-es="Formando Líderes Desde 1911">Developing Leaders Since 1911</p>
+        <a class="cta-btn" href="#about" data-en="Start Here ↓" data-es="Empieza Aquí ↓">
           Start Here &darr;
         </a>
       </section>
@@ -75,8 +78,8 @@
       <!-- ── About ── -->
       <section class="section section-alt" id="about" aria-labelledby="about-title">
         <div class="section-inner">
-          <p class="section-label">Who We Are</p>
-          <h2 class="section-title" id="about-title">About the California Cadet Corps</h2>
+          <p class="section-label" data-en="Who We Are" data-es="Quiénes Somos">Who We Are</p>
+          <h2 class="section-title" id="about-title" data-en="About the California Cadet Corps" data-es="Sobre el Cuerpo de Cadetes de California">About the California Cadet Corps</h2>
           <p class="reveal" style="color: var(--text-muted); margin-bottom: 2rem; max-width: 800px;">
             The program is organized around five core strands, each designed to build a
             well-rounded cadet ready for any career or path after high school.
@@ -120,8 +123,8 @@
       <!-- ── Ranks ── -->
       <section class="section" id="ranks" aria-labelledby="ranks-title">
         <div class="section-inner">
-          <p class="section-label">Promotion Path</p>
-          <h2 class="section-title" id="ranks-title">Your First Four Ranks</h2>
+          <p class="section-label" data-en="Promotion Path" data-es="Camino de Ascenso">Promotion Path</p>
+          <h2 class="section-title" id="ranks-title" data-en="Your First Four Ranks" data-es="Tus Primeros Cuatro Rangos">Your First Four Ranks</h2>
           <p class="section-lead">
             Every cadet starts as a Recruit and earns their way up. Advancement requires
             Time-in-Grade (TIG) <em>and</em> a Performance Task Assessment (PTA). There is
@@ -213,8 +216,8 @@
       <!-- ── Ribbons ── -->
       <section class="section section-alt" id="ribbons" aria-labelledby="ribbons-title">
         <div class="section-inner">
-          <p class="section-label">Awards</p>
-          <h2 class="section-title" id="ribbons-title">Earn Your First Ribbons</h2>
+          <p class="section-label" data-en="Awards" data-es="Premios">Awards</p>
+          <h2 class="section-title" id="ribbons-title" data-en="Earn Your First Ribbons" data-es="Gana Tus Primeras Cintas">Earn Your First Ribbons</h2>
           <p class="section-lead">
             Ribbons are worn on your dress uniform and represent achievement. As a new
             cadet, these seven are the most accessible — focus here first.
@@ -281,12 +284,12 @@
           </div>
 
           <p class="ribbon-ref">
-            Full ribbon criteria: <a href="https://www.cacadets.org/Cadet/Ribbon-Chart" target="_blank" rel="noopener">cacadets.org/Cadet/Ribbon-Chart</a> and
+            Full ribbon criteria: <a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener">cacadets.org/Cadet/Ribbon Chart</a> and
             <strong>CR 1-1</strong> (Cadet Regulation 1-1 — Awards). Specific requirements
             may vary; consult your unit S1 or commander.
           </p>
           <p class="ribbon-ref">
-            <a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener noreferrer">California Cadet Corps Full Ribbon Chart</a>
+            <a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener noreferrer" data-en="California Cadet Corps Full Ribbon Chart" data-es="Tabla Completa de Cintas del Cuerpo de Cadetes de California">California Cadet Corps Full Ribbon Chart</a>
           </p>
         </div>
       </section>
@@ -294,8 +297,8 @@
       <!-- ── Events ── -->
       <section class="section" id="events" aria-labelledby="events-title">
         <div class="section-inner">
-          <p class="section-label">Get Involved</p>
-          <h2 class="section-title" id="events-title">Cadet Events</h2>
+          <p class="section-label" data-en="Get Involved" data-es="Participa">Get Involved</p>
+          <h2 class="section-title" id="events-title" data-en="Cadet Events" data-es="Eventos de Cadetes">Cadet Events</h2>
           <p class="section-lead">
             Events are where cadets grow fastest. They earn ribbons, test skills, and build
             friendships across the corps. Here are the key events you can attend as a new cadet.
@@ -370,8 +373,8 @@
       <!-- ── New Cadet ── -->
       <section class="section section-alt" id="new-cadet" aria-labelledby="new-cadet-title">
         <div class="section-inner">
-          <p class="section-label">Getting Started</p>
-          <h2 class="section-title" id="new-cadet-title">What a New Cadet Needs</h2>
+          <p class="section-label" data-en="Getting Started" data-es="Primeros Pasos">Getting Started</p>
+          <h2 class="section-title" id="new-cadet-title" data-en="What a New Cadet Needs" data-es="Lo Que Necesita un Nuevo Cadete">What a New Cadet Needs</h2>
           <p class="section-lead">
             Your first weeks set the tone. Check off these five priorities and you will be
             ahead of the curve before your first PTA.
@@ -434,8 +437,8 @@
       <!-- ── Official Links ── -->
       <section class="section section-alt" id="official-links" aria-labelledby="official-links-title">
         <div class="section-inner">
-          <p class="section-label">Official California Cadet Corps Website</p>
-          <h2 class="section-title" id="official-links-title">Quick Links</h2>
+          <p class="section-label" data-en="Official California Cadet Corps Website" data-es="Sitio Web Oficial del Cuerpo de Cadetes de California">Official California Cadet Corps Website</p>
+          <h2 class="section-title" id="official-links-title" data-en="Quick Links" data-es="Enlaces Rápidos">Quick Links</h2>
           <nav aria-label="Official California Cadet Corps links">
             <ul class="footer-links" style="flex-wrap: wrap; gap: 0.75rem 1.5rem; padding: 0; list-style: none;">
               <li><a href="https://cacadets.org/" target="_blank" rel="noopener noreferrer">Official Home</a></li>
@@ -448,7 +451,7 @@
               <li><a href="https://cacadets.org/About/Contact" target="_blank" rel="noopener noreferrer">Contact Us</a></li>
             </ul>
           </nav>
-          <p class="section-label" style="margin-top: 2rem;">Follow California Cadet Corps</p>
+          <p class="section-label" style="margin-top: 2rem;" data-en="Follow California Cadet Corps" data-es="Sigue al Cuerpo de Cadetes de California">Follow California Cadet Corps</p>
           <ul class="footer-links" style="flex-wrap: wrap; gap: 0.75rem 1.5rem; padding: 0; list-style: none;">
             <li><a href="https://www.facebook.com/groups/34663686999" target="_blank" rel="noopener noreferrer">Facebook</a></li>
             <li><a href="https://www.instagram.com/hqcacc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
@@ -476,7 +479,7 @@
         <ul class="footer-links">
           <li><a href="https://www.cacadets.org" target="_blank" rel="noopener">cacadets.org</a></li>
           <li><a href="https://cacadets.org/Cadet/Rank%20Structure?lang=en" target="_blank" rel="noopener">Rank Structure</a></li>
-          <li><a href="https://www.cacadets.org/Cadet/Ribbon-Chart" target="_blank" rel="noopener">Ribbon Chart</a></li>
+          <li><a href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener">Ribbon Chart</a></li>
           <li><a href="https://www.cacadets.org/Events" target="_blank" rel="noopener">Events</a></li>
         </ul>
         <p class="footer-disclaimer">
@@ -491,5 +494,19 @@
     </footer>
 
     <script src="/app.js" defer type="module"></script>
+    <script>
+(function () {
+  var btn = document.getElementById('lang-toggle');
+  var currentLang = 'en';
+  btn.addEventListener('click', function () {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll('[data-en][data-es]').forEach(function (el) {
+      el.textContent = el.dataset[currentLang];
+    });
+    btn.textContent = currentLang === 'es' ? 'english' : 'Español';
+  });
+}());
+    </script>
   </body>
 </html>
