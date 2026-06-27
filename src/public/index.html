@@ -19,6 +19,12 @@
       .rank-insignia { display:block; width:72px; height:72px; object-fit:contain; margin-bottom:.5rem; border-radius:var(--radius); background:var(--navy-dark); }
       #lang-toggle { position:fixed; top:1rem; right:1rem; z-index:200; padding:.4rem .8rem; border:1px solid currentColor; background:transparent; cursor:pointer; font-size:.9rem; }
       #lang-switcher { background:transparent; color:inherit; border:1px solid rgba(255,255,255,.4); border-radius:4px; padding:.2rem .4rem; font-size:.85rem; cursor:pointer; }
+      .start-here { display:inline-block; padding:.75rem 2.25rem; background:linear-gradient(135deg,#1e6fbf 0%,#0d4a8c 45%,#1e6fbf 100%); background-size:200% 200%; color:#f5f7fa; font-weight:700; font-size:1.05rem; letter-spacing:.04em; text-decoration:none; border-radius:2rem; box-shadow:0 0 14px rgba(30,111,191,.65),0 3px 10px rgba(0,0,0,.45); position:relative; overflow:hidden; transition:box-shadow .2s ease,transform .15s ease; }
+      .start-here::before { content:''; position:absolute; top:0; left:-65%; width:45%; height:100%; background:linear-gradient(110deg,transparent 0%,rgba(255,255,255,.28) 50%,transparent 100%); transform:skewX(-18deg); animation:start-here-sheen 2.6s ease-in-out infinite; }
+      @keyframes start-here-sheen { 0%{left:-65%} 60%,100%{left:120%} }
+      @media (prefers-reduced-motion:reduce) { .start-here::before{animation:none} }
+      .start-here:hover { box-shadow:0 0 22px rgba(30,111,191,.85),0 5px 14px rgba(0,0,0,.45); transform:translateY(-2px); }
+      .start-here:focus-visible { outline:3px solid #f5c518; outline-offset:4px; }
     </style>
   </head>
   <body>
@@ -81,6 +87,7 @@
         <a class="cta-btn" href="#about" data-en="Start Here ↓" data-es="Empieza Aquí ↓">
           Start Here &darr;
         </a>
+        <a class="start-here" href="#new-cadet">Start here</a>
       </section>
 
       <!-- ── About ── -->
