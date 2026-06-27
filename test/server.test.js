@@ -263,6 +263,18 @@ test('GET /chain-of-command.html returns 200 and contains Chain of Command', asy
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('GET / translation toggle covers whole page: Spanish dict strings embedded in HTML', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.match(text, /id="lang-toggle"/, 'page must contain lang-toggle element');
+  assert.match(text, /Formando L/, 'page must embed at least one Spanish string from the translation dictionary');
+  assert.match(text, /Cuerpo de Cadetes de California/, 'Spanish heading must be present in the inline script dictionary');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 test('GET / promotion path section: rank insignia images with alt text are present', async () => {
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
