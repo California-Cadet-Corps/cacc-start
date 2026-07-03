@@ -105,32 +105,44 @@
     'summer-encampment': {
       title: 'Summer Encampment',
       body: 'Summer Encampment is CACC\'s flagship annual training event, held at Camp San Luis Obispo. Cadets spend approximately two weeks in intensive training that includes physical fitness assessments, drill & ceremonies, barracks inspections, land navigation, leadership reaction courses, and corps-wide competition. It is the single best opportunity for a new cadet to earn multiple ribbons, accelerate rank advancement, and build bonds with cadets from across the state.',
-      sourceHref: 'https://www.cacadets.org/Events',
-      sourceLabel: 'cacadets.org — Events',
+      sourceHref: 'https://www.cacadets.org/Events/SummerCamp',
+      sourceLabel: 'cacadets.org — Summer Camp',
+    },
+    xtc: {
+      title: 'X-Treme Team Challenge (XTC)',
+      body: 'The X-Treme Team Challenge is a competitive team event held at Porterville Military Academy, featuring ten physical and mental challenges including obstacle courses, sprints, trivia, and team games like Human Foosball and Human Battleship. Any cadet in good standing may attend with parental and commandant permission — it is one of the most high-energy, team-building events on the CACC calendar.',
+      sourceHref: 'https://www.cacadets.org/Events/XTC',
+      sourceLabel: 'cacadets.org — XTC',
     },
     'drill-competition': {
       title: 'Drill Competition',
       body: 'CACC Drill Competitions are held at both regional and statewide levels, where cadet units compete in armed drill, unarmed drill, color guard, and individual events before a panel of military judges. Competing sharpens precision, discipline, and unit teamwork. Drill Competition is one of the most visible ways a cadet unit earns recognition across the corps, and placing well is a point of pride for both cadets and their commanders.',
-      sourceHref: 'https://www.cacadets.org/Events',
-      sourceLabel: 'cacadets.org — Events',
+      sourceHref: 'https://www.cacadets.org/Events/DrillCompetition',
+      sourceLabel: 'cacadets.org — Drill Competition',
     },
-    'grizzly-adventure': {
-      title: 'Grizzly Adventure / Summer Camp',
-      body: 'Grizzly Adventure is an outdoor leadership camp that focuses on experiential challenges including high-ropes courses, team-building exercises, and wilderness survival skills. It complements the Summer Encampment offering for cadets seeking a more outdoor-adventure-oriented CACC-sponsored experience. Participation builds confidence, resilience, and the kind of peer trust that carries over into unit leadership.',
-      sourceHref: 'https://www.cacadets.org/Events',
-      sourceLabel: 'cacadets.org — Events',
+    'individual-major-awards': {
+      title: 'Individual Major Awards (IMAs)',
+      body: 'The Individual Major Awards competition lets cadets demonstrate their proficiency and knowledge of the CACC program through an interview board process covering interview, oral presentation, uniform inspection, drill test, and written test. Competitions run at the school level, feed into brigade-level competitions, and culminate in state championships across the Grizzly, Junior, and Senior divisions — one of the highest-visibility ways an individual cadet can be recognized.',
+      sourceHref: 'https://www.cacadets.org/Events/IMA',
+      sourceLabel: 'cacadets.org — IMA',
     },
-    'wilderness-survival': {
-      title: 'Wilderness & Survival Training',
-      body: 'CACC\'s Wilderness & Survival Training is a multi-day field course covering land navigation with map and compass, overnight bivouac setup, shelter construction, and backcountry survival skills. Participating cadets are typically eligible to earn the Bivouac ribbon, one of the accessible early awards for new cadets. The course develops the self-reliance and adaptability that the Healthy Living and Military Subjects strands target.',
-      sourceHref: 'https://www.cacadets.org/Events',
-      sourceLabel: 'cacadets.org — Events',
+    'wilderness-skills': {
+      title: 'Wilderness Skills',
+      body: 'The Wilderness Skills Course is a restricted-enrollment field program for 8th-12th grade cadets covering shelter construction, fire-starting techniques, water purification, backcountry hiking, and camp cooking. Held in a remote setting, it builds practical outdoor competencies and strong bonds among participants.',
+      sourceHref: 'https://www.cacadets.org/Events/WSC',
+      sourceLabel: 'cacadets.org — Wilderness Skills Course',
+    },
+    'survival-training': {
+      title: 'Survival Training',
+      body: 'CACC Survival Training is a limited-enrollment Field Training Exercise at Camp San Luis Obispo, run through Survival Training and Advanced Survival Training units. It builds self-reliance, critical thinking, resilience, and stress-management skills — a foundational component of CACC leadership development, with scholarship opportunities available for qualifying cadets.',
+      sourceHref: 'https://www.cacadets.org/Events/Survival',
+      sourceLabel: 'cacadets.org — Survival Training',
     },
     marksmanship: {
       title: 'Marksmanship Competition',
       body: 'CACC Marksmanship Competitions are open to cadets of all skill levels who have completed the required safety training. Cadets compete on a live-fire range or the Engagement Skills Trainer (EST) — a virtual marksmanship system that simulates real range conditions. The Marksmanship Training ribbon is one of the more accessible early achievements: complete the safety training and qualify, and it is yours.',
-      sourceHref: 'https://www.cacadets.org/Events',
-      sourceLabel: 'cacadets.org — Events',
+      sourceHref: 'https://www.cacadets.org/Events/YTC',
+      sourceLabel: 'cacadets.org — Events Calendar',
     },
   };
 
