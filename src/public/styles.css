@@ -985,3 +985,129 @@ code, strong, a {
 .modal-attribution a {
   color: var(--gold);
 }
+
+/* ── QR button (nav) ── */
+.qr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.qr-btn:hover {
+  background: var(--gold);
+  color: var(--navy-dark);
+}
+
+.qr-btn:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 2px;
+}
+
+.qr-btn-icon {
+  display: block;
+}
+
+/* ── QR modal ── */
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.qr-overlay[hidden] {
+  display: none;
+}
+
+.qr-dialog {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 2rem 2rem 1.75rem;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+.qr-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #6a7688;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.qr-close:hover {
+  color: #0b1d3a;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.qr-close:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.qr-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 0.35rem;
+}
+
+.qr-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0b1d3a;
+  line-height: 1.25;
+  margin-bottom: 1.1rem;
+  padding: 0 0.5rem;
+}
+
+.qr-code-img {
+  width: 280px;
+  height: 280px;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 0.9rem;
+  image-rendering: pixelated;
+}
+
+.qr-url {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.qr-help {
+  font-size: 0.85rem;
+  color: #47536a;
+  line-height: 1.5;
+}
