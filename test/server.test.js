@@ -207,7 +207,12 @@ test('GET / events section: titles link to cacadets.org and disclaimer is presen
   assert.match(text, /<em>Events NOT guaranteed<\/em>/, 'disclaimer must be italicized with <em>');
   assert.match(text, /href="https:\/\/cacadets\.org\/Events\/SummerCamp"/, 'Summer Encampment must link to SummerCamp page');
   assert.match(text, /href="https:\/\/cacadets\.org\/Events\/DrillCompetition"/, 'Drill Competition must link to DrillCompetition page');
-  assert.match(text, /href="https:\/\/cacadets\.org\/Events\/WSC"/, 'Wilderness training must link to WSC page');
+  assert.match(text, /href="https:\/\/cacadets\.org\/Events\/WSC"/, 'Wilderness Skills must link to WSC page');
+  assert.match(text, /XTC/, 'XTC must be present');
+  assert.match(text, /Individual Major Awards/, 'Individual Major Awards must be present');
+  assert.match(text, /Survival Training/, 'Survival Training must be present');
+  assert.doesNotMatch(text, /Grizzly Adventure/, 'Grizzly Adventure card must be removed');
+  assert.match(text, /cacadets\.org\/Events\/YTC/, 'full events calendar must point to /Events/YTC');
   await new Promise((resolve) => server.close(resolve));
 });
 
