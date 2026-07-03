@@ -24,7 +24,7 @@ test('GET / serves the landing page', async () => {
   assert.match(text, /logo\.png/);
   assert.match(text, /cacadets\.org\/Cadet\/Ribbon%20Chart\?lang=en/);
   assert.match(text, /rel="icon"/, 'page must declare a favicon link');
-  assert.match(text, /cyber unit 2026 was here/, 'page must contain the cyber unit footer text');
+  assert.doesNotMatch(text, /cyber unit 2026 was here/i, 'cyber unit footer must be removed');
   await new Promise((resolve) => server.close(resolve));
 });
 
