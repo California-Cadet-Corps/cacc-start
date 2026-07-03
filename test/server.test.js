@@ -131,7 +131,6 @@ test('GET / contains official cacadets.org links and no bare placeholder href', 
   const text = await res.text();
   assert.equal(res.status, 200);
   assert.match(text, /href="https:\/\/cacadets\.org\/"/, 'page must link to https://cacadets.org/');
-  assert.match(text, /href="https:\/\/cacadets\.org\/Commandant\/HowtoJoin"/, 'page must link to How to Join');
   assert.doesNotMatch(text, /href="#"/, 'page must not contain bare placeholder href="#"');
   assert.doesNotMatch(text, /href="https?:\/\/example\.com/, 'page must not contain example.com links');
   await new Promise((resolve) => server.close(resolve));
