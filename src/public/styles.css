@@ -301,6 +301,12 @@ body {
   transform: translateY(-2px);
 }
 
+.cta-btn-lg {
+  padding: 1.1rem 3rem;
+  font-size: 1.05rem;
+  margin-top: 1.5rem;
+}
+
 /* ── Section base ── */
 .section {
   padding: var(--section-pad);
@@ -623,46 +629,6 @@ body {
   text-transform: uppercase;
 }
 
-.at-event {
-  margin-top: 3rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-}
-
-.at-event h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--gold);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.at-event-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.5rem;
-  list-style: none;
-}
-
-.at-event-list li {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  padding: 0.4rem 0;
-  padding-left: 1.25rem;
-  position: relative;
-}
-
-.at-event-list li::before {
-  content: "›";
-  position: absolute;
-  left: 0;
-  color: var(--gold);
-  font-weight: 700;
-}
-
 /* ── New Cadet checklist ── */
 .checklist {
   list-style: none;
@@ -816,10 +782,6 @@ body {
   .rank-timeline::before {
     left: 30px;
   }
-
-  .at-event {
-    padding: 1.5rem 1.25rem;
-  }
 }
 
 /* ── Responsive: small mobile ── */
@@ -848,10 +810,6 @@ body {
 
   .rank-timeline::before {
     left: 26px;
-  }
-
-  .at-event {
-    padding: 1.25rem 1rem;
   }
 
   .checklist li {

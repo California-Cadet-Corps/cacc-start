@@ -131,9 +131,23 @@ test('GET / contains official cacadets.org links and no bare placeholder href', 
   const text = await res.text();
   assert.equal(res.status, 200);
   assert.match(text, /href="https:\/\/cacadets\.org\/"/, 'page must link to https://cacadets.org/');
-  assert.match(text, /href="https:\/\/cacadets\.org\/Commandant\/HowtoJoin"/, 'page must link to How to Join');
   assert.doesNotMatch(text, /href="#"/, 'page must not contain bare placeholder href="#"');
   assert.doesNotMatch(text, /href="https?:\/\/example\.com/, 'page must not contain example.com links');
+  await new Promise((resolve) => server.close(resolve));
+});
+
+test('GET / removed sections are gone and the main-site CTA button is present', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const res = await fetch(`http://localhost:${port}/`);
+  const text = await res.text();
+  assert.equal(res.status, 200);
+  assert.doesNotMatch(text, /Quick Links/, 'Quick Links section must be removed');
+  assert.doesNotMatch(text, /What You.?ll Do at an Event/, 'What You\'ll Do at an Event section must be removed');
+  assert.doesNotMatch(text, /id="official-links"/, 'official-links section id must be removed');
+  assert.doesNotMatch(text, /id="at-event"/, 'at-event section id must be removed');
+  assert.doesNotMatch(text, /href="https:\/\/cacadets\.org\/Commandant\/HowtoJoin"/, 'the removed How to Join link must not remain');
+  assert.match(text, /<a[^>]+class="[^"]*cta-btn-lg[^"]*"[^>]+href="https:\/\/cacadets\.org\/"/, 'a big CTA button must link to https://cacadets.org/');
   await new Promise((resolve) => server.close(resolve));
 });
 
