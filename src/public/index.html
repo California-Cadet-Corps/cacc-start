@@ -31,6 +31,11 @@
       .events-disclaimer { margin-top:1.25rem; font-size:.9rem; color:var(--text-muted); }
       .rank-insignia { display:block; width:72px; height:72px; object-fit:contain; margin-bottom:.5rem; border-radius:var(--radius); background:var(--navy-dark); }
       #lang-toggle { position:fixed; top:1rem; right:1rem; z-index:200; padding:.4rem .8rem; border:1px solid currentColor; background:transparent; cursor:pointer; font-size:.9rem; }
+      @media (max-width:900px) {
+        /* #lang-switcher inside the nav already covers translation on mobile; the fixed
+           #lang-toggle would otherwise overlap the sticky nav's right-side controls. */
+        #lang-toggle { display:none; }
+      }
       #lang-switcher { background:#fff; color:#0b1d3a; border:1px solid rgba(255,255,255,.4); border-radius:4px; padding:.2rem .4rem; font-size:.85rem; cursor:pointer; }
       #lang-switcher option { background:#fff; color:#0b1d3a; }
       .start-here { display:inline-block; padding:.75rem 2.25rem; background:linear-gradient(135deg,#1e6fbf 0%,#0d4a8c 45%,#1e6fbf 100%); background-size:200% 200%; color:#f5f7fa; font-weight:700; font-size:1.05rem; letter-spacing:.04em; text-decoration:none; border-radius:2rem; box-shadow:0 0 14px rgba(30,111,191,.65),0 3px 10px rgba(0,0,0,.45); position:relative; overflow:hidden; transition:box-shadow .2s ease,transform .15s ease; }
