@@ -182,4 +182,42 @@
       if (e.key === 'Escape' && !overlay.hidden) closeModal();
     });
   }
+
+  /* ── QR code modal ── */
+  const qrBtn = document.getElementById('qr-btn');
+  const qrOverlay = document.getElementById('qr-overlay');
+  const qrClose = document.getElementById('qr-close');
+
+  if (qrBtn && qrOverlay && qrClose) {
+    let qrPreviousFocus = null;
+
+    function openQr() {
+      qrPreviousFocus = document.activeElement;
+      qrOverlay.hidden = false;
+      qrOverlay.removeAttribute('aria-hidden');
+      qrClose.focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeQr() {
+      qrOverlay.hidden = true;
+      qrOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (qrPreviousFocus) {
+        qrPreviousFocus.focus();
+        qrPreviousFocus = null;
+      }
+    }
+
+    qrBtn.addEventListener('click', openQr);
+    qrClose.addEventListener('click', closeQr);
+
+    qrOverlay.addEventListener('click', (e) => {
+      if (e.target === qrOverlay) closeQr();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !qrOverlay.hidden) closeQr();
+    });
+  }
 })();

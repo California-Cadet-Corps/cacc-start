@@ -65,6 +65,20 @@
         <li><a href="#new-cadet" data-i18n="nav-new-cadet">New Cadet</a></li>
       </ul>
 
+      <button
+        class="qr-btn"
+        id="qr-btn"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="qr-overlay"
+        aria-label="Show a QR code to open this guide on a phone"
+      >
+        <svg class="qr-btn-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path fill="currentColor" d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8 6h2v-2h-2v2zm0-6h2v2h-2v-2zm2 2h2v2h-2v-2zm2-2h2v2h-2v-2zm2 2h2v2h-2v-2zm0 4h2v2h-2v-2zm-4 0h2v2h-2v-2zm2-2h2v2h-2v-2z"/>
+        </svg>
+        <span data-i18n="qr-btn">QR</span>
+      </button>
+
       <select id="lang-switcher" aria-label="Select language">
         <!-- Language options intentionally display in their own language (UX best practice). -->
         <option value="en">English</option>
@@ -497,6 +511,19 @@
         <h2 id="modal-title" class="modal-title"></h2>
         <div id="modal-body" class="modal-body"></div>
         <p id="modal-attribution" class="modal-attribution"></p>
+      </div>
+    </div>
+
+    <!-- ── QR Code Modal ── -->
+    <!-- Project this on a classroom screen; cadets scan it to open the guide on their phones. -->
+    <div class="qr-overlay" id="qr-overlay" hidden aria-hidden="true">
+      <div class="qr-dialog" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+        <button class="qr-close" id="qr-close" type="button" aria-label="Close dialog">&#10005;</button>
+        <p class="qr-eyebrow" data-i18n="qr-eyebrow">Scan Me</p>
+        <h2 class="qr-modal-title" id="qr-modal-title" data-i18n="qr-title">Put this guide in your pocket</h2>
+        <img class="qr-code-img" src="/qr-start.png" alt="QR code that links to start.cacadets.org" width="280" height="280" />
+        <p class="qr-url">start.cacadets.org</p>
+        <p class="qr-help" data-i18n="qr-help">Point your phone camera at the code &mdash; the new-cadet guide opens instantly, right in your pocket.</p>
       </div>
     </div>
 
