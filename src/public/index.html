@@ -328,7 +328,7 @@
             <strong>CR 1-1</strong> (Cadet Regulation 1-1 — Awards). Specific requirements
             may vary; consult your unit S1 or commander.
           </p>
-          <p class="ribbon-ref">
+          <p class="ribbon-ref" style="text-align: center;">
             <a class="cta-btn cta-btn-ghost" href="https://www.cacadets.org/Cadet/Ribbon%20Chart?lang=en" target="_blank" rel="noopener noreferrer" data-i18n="ribbon-chart-link">California Cadet Corps Full Ribbon Chart</a>
           </p>
         </div>
@@ -477,6 +477,11 @@
       </section>
 
       <!-- ── More Info ── -->
+      <!-- TODO(integ): PR #63 (ws/prelaunch-link-cleanup) independently reworked this section as
+           id="official-links", but main's own test suite (test/server.test.js) explicitly asserts
+           that id="official-links" must NOT be present, so the id="more-info" structure from main
+           was kept. The PR's social-links list is folded in below so no content is lost; a human
+           should confirm the merged copy/wording reads well. -->
       <section class="section section-alt" id="more-info" aria-labelledby="more-info-title">
         <div class="section-inner" style="text-align: center;">
           <h2 class="section-title" id="more-info-title" data-i18n="more-info-title">Want More Information?</h2>
@@ -484,6 +489,15 @@
             Visit the official California Cadet Corps website for the full curriculum, forms, and program details.
           </p>
           <a class="cta-btn cta-btn-lg" href="https://cacadets.org/" target="_blank" rel="noopener noreferrer" data-i18n="more-info-btn">Visit Our Main Site</a>
+
+          <p class="section-label" style="margin-top: 2rem;" data-i18n="social-label">Follow California Cadet Corps</p>
+          <!-- Social media names (Facebook, Instagram, YouTube, LinkedIn) are proper names; not translated by design. -->
+          <ul class="footer-links" style="flex-wrap: wrap; gap: 0.75rem 1.5rem; padding: 0; list-style: none;">
+            <li><a href="https://www.facebook.com/groups/34663686999" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.instagram.com/hqcacc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://www.youtube.com/hqcacc" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+            <li><a href="https://www.linkedin.com/company/hqcacc/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
         </div>
       </section>
 
