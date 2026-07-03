@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- TODO(integ): HEAD had inline CSS styles; superseded by external styles.css introduced in PR #14. Restore any missing rules from the old inline block if needed. -->
     <meta name="description" content="New cadet start guide for the California Cadet Corps — ranks, ribbons, events, and everything a brand-new cadet needs to know." />
+    <meta name="theme-color" content="#071e44" />
     <title>California Cadet Corps — New Cadet Start Guide</title>
+
+    <!-- Social / link-preview metadata (Open Graph + Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="California Cadet Corps" />
+    <meta property="og:title" content="California Cadet Corps — New Cadet Start Guide" />
+    <meta property="og:description" content="Written by cadets, for cadets — everything a brand-new California Cadet Corps cadet needs: ranks, ribbons, events, and first-year guidance." />
+    <meta property="og:url" content="https://start.cacadets.org/" />
+    <meta property="og:image" content="https://start.cacadets.org/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="California Cadet Corps — New Cadet Start Guide" />
+    <meta name="twitter:description" content="Written by cadets, for cadets — your first-year guide to the California Cadet Corps." />
+    <meta name="twitter:image" content="https://start.cacadets.org/logo.png" />
+
     <link rel="stylesheet" href="/styles.css" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <style>
@@ -79,10 +93,15 @@
           width="160"
           height="160"
         />
-        <!-- "Est. 1911" is a founding-year brand literal; not translated by design. -->
-        <p class="hero-eyebrow">Est. 1911</p>
+        <!-- "California Cadet Corps · Est. 1911" is a brand literal; not translated by design. -->
+        <p class="hero-eyebrow">California Cadet Corps &middot; Est. 1911</p>
+        <h1 class="hero-title" data-i18n="hero-title">Written by Cadets, <em>for Cadets</em></h1>
         <p class="hero-tagline" data-i18n="tagline">Developing Leaders Since 1911</p>
-        <a class="cta-btn" href="#about" data-i18n="cta-btn">Start Here &darr;</a>
+        <p class="hero-sub" data-i18n="hero-sub">The new-cadet start guide &mdash; everything you need for your first year, built by cadets who have walked the same path.</p>
+        <div class="hero-actions">
+          <a class="cta-btn" href="#about" data-i18n="cta-btn">Start Here &darr;</a>
+          <a class="cta-btn cta-btn-ghost" href="#ranks" data-i18n="cta-ranks">See the Ranks</a>
+        </div>
       </section>
 
       <!-- ── About ── -->
