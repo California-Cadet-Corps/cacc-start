@@ -199,6 +199,27 @@ test('ribbon box layout: cards are flex columns with sized images and wrapping d
   await new Promise((resolve) => server.close(resolve));
 });
 
+test('ribbon chart button: legible resting state and centered reference block', async () => {
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+  const [htmlRes, cssRes] = await Promise.all([
+    fetch(`http://localhost:${port}/`),
+    fetch(`http://localhost:${port}/styles.css`),
+  ]);
+  const html = await htmlRes.text();
+  const css = await cssRes.text();
+  assert.match(
+    html,
+    /<a class="ribbon-chart-btn" href="https:\/\/www\.cacadets\.org\/Cadet\/Ribbon%20Chart\?lang=en" target="_blank" rel="noopener noreferrer" data-i18n="ribbon-chart-link">/,
+    'ribbon chart link must carry the ribbon-chart-btn class with its href/target/rel/data-i18n unchanged'
+  );
+  assert.match(css, /\.ribbon-ref\s*\{[^}]*text-align\s*:\s*center/, '.ribbon-ref must center its content');
+  assert.match(css, /\.ribbon-chart-btn\s*\{[^}]*color\s*:\s*var\(--gold\)/, '.ribbon-chart-btn must use legible gold text at rest');
+  assert.match(css, /\.ribbon-chart-btn\s*\{[^}]*border\s*:/, '.ribbon-chart-btn must have a visible border at rest');
+  assert.match(css, /\.ribbon-chart-btn:hover\s*\{[^}]*background\s*:\s*var\(--gold\)/, '.ribbon-chart-btn must fill on hover');
+  await new Promise((resolve) => server.close(resolve));
+});
+
 
 test('GET / does not contain barracks inspection or alpine tower content', async () => {
   await new Promise((resolve) => server.listen(0, resolve));

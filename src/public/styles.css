@@ -572,10 +572,35 @@ body {
   margin-top: 2.5rem;
   font-size: 0.82rem;
   color: var(--text-dim);
+  text-align: center;
 }
 
 .ribbon-ref a {
   color: var(--gold);
+}
+
+.ribbon-chart-btn {
+  display: inline-block;
+  margin-top: 0.85rem;
+  padding: 0.6rem 1.5rem;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.ribbon-chart-btn:hover {
+  background: var(--gold);
+  color: var(--navy-dark);
+}
+
+.ribbon-chart-btn:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
 }
 
 /* ── Events ── */
