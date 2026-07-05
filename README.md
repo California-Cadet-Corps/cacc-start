@@ -3,7 +3,6 @@
 > Production application for **[start.cacadets.org](https://start.cacadets.org)** — the California Cadet Corps start/landing portal.
 
 [![CI](https://github.com/California-Cadet-Corps/cacc-start/actions/workflows/ci.yml/badge.svg)](https://github.com/California-Cadet-Corps/cacc-start/actions/workflows/ci.yml)
-[![Deploy](https://github.com/California-Cadet-Corps/cacc-start/actions/workflows/deploy.yml/badge.svg)](https://github.com/California-Cadet-Corps/cacc-start/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 A Node.js application maintained by the California Cadet Corps. This repository follows a **controlled contribution workflow**: all changes land on `main` exclusively through reviewed, CI-validated Pull Requests, and merges to `main` deploy automatically to production.
@@ -104,14 +103,11 @@ Full details: **[docs/CONTRIBUTING-PRS.md](./docs/CONTRIBUTING-PRS.md)** and **[
 
 ## Deployment
 
-Production runs on a **Linode** server behind **Apache** (reverse-proxying to the Node app on `127.0.0.1:3002`), served at **https://start.cacadets.org**. Deployment is automated: a push to `main` runs [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml), which builds the app and ships it over SSH using an atomic, symlinked-release strategy that supports instant rollback.
+Production runs on **Vercel** (team `california-cadet-corps`, project `cacc-start`), served at **https://start.cacadets.org**. The site is deployed as static files from [`src/public/`](./src/public) (see [`vercel.json`](./vercel.json)) — merging to `main` triggers a production deploy automatically via Vercel's Git integration; PRs get preview deployments.
 
-- How it works → **[docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)**
-- Rolling back → **[docs/ROLLBACK.md](./docs/ROLLBACK.md)**
-- One-time server provisioning → **[docs/SERVER_SETUP.md](./docs/SERVER_SETUP.md)**
-- Required GitHub Secrets → **[docs/SECRETS.md](./docs/SECRETS.md)**
+The local Node server (`npm start`) is for development only — it serves the same `src/public/` files.
 
-> **Production note:** the app listens on port **3002** (port 3000 was already taken on the shared Linode host). The port lives in the server's `shared/.env` and the deploy health check reads it from there.
+> **Legacy Linode deployment (retired 2026-07-04):** production previously ran on the shared Linode behind Apache (Node app on `127.0.0.1:3002`, deployed over SSH by a GitHub Actions workflow). The old provisioning artifacts are kept in [`deploy/`](./deploy) and [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) / [`docs/ROLLBACK.md`](./docs/ROLLBACK.md) / [`docs/SERVER_SETUP.md`](./docs/SERVER_SETUP.md) / [`docs/SECRETS.md`](./docs/SECRETS.md) for rollback reference until the Linode is decommissioned.
 
 ## Documentation
 
