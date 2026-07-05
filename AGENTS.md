@@ -8,11 +8,19 @@ The California Cadet Corps start/landing portal (start.cacadets.org). Part of th
 This repo is one app in the **California Cadet Corps (CACC)** multi-app system. It is
 not standalone — it shares identity, data, and infrastructure conventions with the
 other CACC apps. Before making cross-cutting changes (auth, hosting, data model,
-DNS/subdomains, new integrations), read the org-wide source of truth:
+DNS/subdomains, new integrations, or **provisioning storage/buckets, a database, or an
+Entra app**), read the org-wide source of truth:
 
 - **Master architecture + repo registry:** `California-Cadet-Corps/.github` → `ARCHITECTURE.md`
   - Fetch: `gh api repos/California-Cadet-Corps/.github/contents/ARCHITECTURE.md --jq .content | base64 -d`
   - Browse: https://github.com/California-Cadet-Corps/.github/blob/main/ARCHITECTURE.md
+
+**⛔ Hard rules (always apply, no exceptions without recording a decision in `ARCHITECTURE.md`):**
+- **Object storage = Supabase Storage** in the shared project. **Never create a new Linode Object
+  Storage / S3 bucket** or add new `@aws-sdk/client-s3` paths — use a private Supabase bucket with
+  signed URLs (`cacc-tools-2.0` is the reference). Migration: `.github/docs/object-storage-migration.md`.
+- **One shared Supabase project + one shared Entra sign-in app** — don't stand up a new Supabase
+  project or per-app sign-in registration for target-stack work.
 
 `ARCHITECTURE.md` is authoritative for: every repo and what it does, the shared identity
 backbone (one Supabase project + Microsoft/Entra SSO), where each app is hosted (Vercel
