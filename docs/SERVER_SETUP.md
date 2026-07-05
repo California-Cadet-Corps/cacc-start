@@ -1,5 +1,8 @@
 # Linode server setup (one time)
 
+> **RETIRED — Linode legacy (retired 2026-07-04):** kept for rollback/reference
+> only. Production is Vercel — see [`docs/DEPLOYMENT.md`](./DEPLOYMENT.md).
+
 This provisions a fresh Ubuntu 22.04/24.04 Linode to host
 **start.cacadets.org**. A scripted version of these steps is in
 [`deploy/scripts/server-setup.sh`](../deploy/scripts/server-setup.sh) — read it
