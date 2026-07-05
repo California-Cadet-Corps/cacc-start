@@ -3,9 +3,9 @@
 "**Deploy**" is a fancy word for: *"put the code onto the real website so the whole
 world can see it."*
 
-The amazing part? **You don't do it manually.** When your PR is merged, robots take
-your code and publish it to [start.cacadets.org](https://start.cacadets.org) all by
-themselves. Let's see how. 🤖
+The amazing part? **You don't do it manually.** When your PR is merged, a service
+called **Vercel** takes your code and publishes it to
+[start.cacadets.org](https://start.cacadets.org) all by itself. Let's see how. 🤖
 
 ---
 
@@ -15,32 +15,35 @@ themselves. Let's see how. 🤖
 You merge your PR into `main`
         │
         ▼
-🤖 GitHub Actions wakes up ("Oh! main changed!")
+🤖 GitHub Actions runs CI first ("Oh! main changed!")
+        │
+        ├─ 1. Installs the building blocks   (npm ci)
+        ├─ 2. Runs all the tests             (npm test)
+        └─ 3. Lints the code                 (npm run lint)
+        │
+        ▼
+▲ Vercel notices the new commit on `main` too
         │
         ├─ 1. Grabs the newest code
-        ├─ 2. Installs the building blocks   (npm ci)
-        ├─ 3. Builds the project             (npm run build)
-        ├─ 4. Runs all the tests             (npm test)   ← if these fail, it STOPS. Live site untouched!
-        ├─ 5. Sends the code to our server   (over a secure connection called SSH)
-        ├─ 6. Switches the website to the new version  (instantly!)
-        └─ 7. Checks the site is healthy     (visits /healthz)
+        ├─ 2. Serves it straight from src/public/  (no build needed!)
+        └─ 3. Switches the website to the new version  (instantly!)
         │
         ▼
 🌍 start.cacadets.org now shows your change!
 ```
 
-This whole thing usually takes **1–3 minutes**.
+This whole thing usually takes **1–2 minutes**.
 
 ---
 
 ## Where does the website actually live?
 
-On a computer in a data center called a **server**. Ours is rented from a company
-called **Linode**. It runs 24/7 so the website is always on. A program called
-**Nginx** answers visitors and passes them to our Node.js app.
+On **Vercel**, a hosting service that serves our static site straight from the
+`src/public/` folder in this repo — no server to babysit. Every push to `main`
+gets its own deployment, and Vercel keeps the previous ones around too.
 
-You don't need to touch the server — that's a job for the grown-up maintainers. But
-now you know it's a real computer somewhere, running your code! 🖥️
+You don't need to touch Vercel yourself — that's a job for the grown-up
+maintainers. But now you know where the website actually lives! 🖥️
 
 ---
 
@@ -48,13 +51,11 @@ now you know it's a real computer somewhere, running your code! 🖥️
 
 We built in safety nets:
 
-- **Tests run first.** If your code fails the tests, the deploy stops *before*
-  touching the live site. The old, working version keeps running.
-- **Instant undo.** Every version is saved. If a bad version sneaks through, a
-  maintainer can switch back to the previous one in seconds. (This is called a
-  "rollback.")
-- **Health check.** After deploying, the robot visits a special `/healthz` page to
-  make sure the site is alive. If not, it raises the alarm.
+- **Tests run first.** CI runs on every PR, *before* it can be merged. If your
+  code fails the tests, it can't reach `main` in the first place.
+- **Instant undo.** Vercel keeps every past deployment. If a bad version sneaks
+  through, a maintainer can switch back to a previous one in seconds from the
+  Vercel dashboard. (This is called a "rollback.")
 
 So even if something breaks, **the website doesn't stay broken.** 😌
 
@@ -62,12 +63,11 @@ So even if something breaks, **the website doesn't stay broken.** 😌
 
 ## How can I tell if my change is live?
 
-1. Go to the [**Actions** tab](https://github.com/California-Cadet-Corps/cacc-start/actions)
-   on GitHub.
-2. Find the run named **"Deploy to Production"** for your merge.
-3. 🟡 Yellow dot = still working. ✅ Green = live! ❌ Red = something failed (tell a mentor).
-4. Once it's green, visit [start.cacadets.org](https://start.cacadets.org) and find
-   your change. 🎉
+1. Once your PR is merged, ask a maintainer to check the **Vercel dashboard**
+   for the project — it shows the new deployment going from *Building* to
+   *Ready*.
+2. Once it's ready, visit [start.cacadets.org](https://start.cacadets.org) and
+   find your change. 🎉
 
 ---
 
@@ -76,11 +76,10 @@ So even if something breaks, **the website doesn't stay broken.** 😌
 | Word | Kid-friendly meaning |
 |------|---------------------|
 | **Deploy** | Publish the code to the real website |
-| **CI/CD** | The robots that test (CI) and publish (CD) your code automatically |
-| **Server** | A computer that runs the website 24/7 |
+| **CI** | The robots that test your code automatically before it can merge |
+| **Vercel** | The hosting service that publishes and serves the website |
 | **Production** | The real, live website that visitors use |
 | **Rollback** | Undo a deploy — switch back to the last good version |
-| **SSH** | A secure, locked tunnel used to talk to the server |
 
 ---
 

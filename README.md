@@ -80,7 +80,7 @@ cacc-start/
 │   └── scripts/         # server-setup.sh, rollback.sh
 ├── docs/                # Contributor & operator documentation
 ├── .github/
-│   ├── workflows/       # ci.yml (PR checks), deploy.yml (production deploy)
+│   ├── workflows/       # ci.yml (PR checks)
 │   ├── ISSUE_TEMPLATE/
 │   └── PULL_REQUEST_TEMPLATE.md
 └── package.json
