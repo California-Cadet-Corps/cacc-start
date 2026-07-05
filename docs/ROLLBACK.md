@@ -1,5 +1,9 @@
 # Rolling back a deployment
 
+> **RETIRED — Linode legacy (retired 2026-07-04):** this is the rollback path
+> for the retired Linode host, kept for rollback/reference only. Production is
+> Vercel — see [`docs/DEPLOYMENT.md`](./DEPLOYMENT.md).
+
 Every deploy is kept as a timestamped release directory and activated via a
 `current` symlink, so rolling back is just re-pointing the symlink and
 restarting — no rebuild, a few seconds of work.
