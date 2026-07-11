@@ -343,7 +343,8 @@ test('GET / promotion path section: rank insignia images with alt text are prese
   assert.match(text, /alt="Cadet rank insignia"/, 'Cadet rank image must have descriptive alt text');
   assert.match(text, /alt="Cadet First Class rank insignia"/, 'Cadet First Class rank image must have descriptive alt text');
   assert.match(text, /alt="Cadet Corporal rank insignia"/, 'Cadet Corporal rank image must have descriptive alt text');
-  assert.match(text, /linodeobjects\.com\/Ranks\//, 'rank images must be sourced from cacadets.org image storage');
+  assert.match(text, /cacadets\.org\/files\/cacc\/Ranks\//, 'rank images must be sourced from cacadets.org Supabase-backed image storage');
+  assert.doesNotMatch(text, /linodeobjects\.com/, 'rank images must not reference the retired Linode object storage');
   await new Promise((resolve) => server.close(resolve));
 });
 
