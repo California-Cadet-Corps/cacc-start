@@ -81,8 +81,8 @@ git push --force-with-lease    # only on your own feature branch
 ## 6. Merge & deploy
 
 Once approved and green, a maintainer merges. **Merging to `main` automatically
-triggers the production deploy** — see [DEPLOYMENT.md](./DEPLOYMENT.md). You do
-not run any deploy commands yourself.
+triggers a production deploy via Vercel** — see [DEPLOYMENT.md](./DEPLOYMENT.md).
+You do not run any deploy commands yourself.
 
 ## Tips
 

@@ -1,7 +1,14 @@
 # GitHub Secrets
 
-The production deploy workflow authenticates to the Linode server over SSH using
-secrets stored in GitHub. Configure them at:
+> **Legacy (retired 2026-07-04):** production now deploys via **Vercel**'s Git
+> integration (see [DEPLOYMENT.md](./DEPLOYMENT.md)), which needs no GitHub
+> Secrets — Vercel manages its own project credentials outside this repo. The
+> `LINODE_*` secrets and the retired GitHub Actions workflow described below
+> were used by the old Linode SSH deploy and are kept here only for rollback
+> reference until the Linode is decommissioned.
+
+The (retired) production deploy workflow authenticated to the Linode server over
+SSH using secrets stored in GitHub. They were configured at:
 
 **Repo → Settings → Secrets and variables → Actions → New repository secret**
 
@@ -15,39 +22,38 @@ gh secret set LINODE_DEPLOY_PATH     --repo California-Cadet-Corps/cacc-start
 gh secret set LINODE_PORT            --repo California-Cadet-Corps/cacc-start   # optional
 ```
 
-## Required secrets
+## Legacy secrets (Linode deploy, retired)
 
 | Secret | Required | Example | Purpose |
 | ------ | -------- | ------- | ------- |
-| `LINODE_HOST` | ✅ | `203.0.113.10` or `start.cacadets.org` | Server hostname/IP the workflow SSHes into. |
+| `LINODE_HOST` | ✅ | `203.0.113.10` or `start.cacadets.org` | Server hostname/IP the workflow SSHed into. |
 | `LINODE_USER` | ✅ | `deploy` | SSH user that owns the deploy path and may restart the service. |
 | `LINODE_SSH_PRIVATE_KEY` | ✅ | *(full PEM)* | Private half of the deploy key. Its **public** half is in the server's `~deploy/.ssh/authorized_keys`. |
 | `LINODE_DEPLOY_PATH` | ✅ | `/var/www/cacc-start` | Base dir containing `releases/`, `current`, `shared/`. |
-| `LINODE_PORT` | ⬜ optional | `22` | SSH port. Defaults to `22` in the workflow if omitted. |
+| `LINODE_PORT` | ⬜ optional | `22` | SSH port. Defaulted to `22` in the workflow if omitted. |
 
-> The workflow references `LINODE_PORT` as `${{ secrets.LINODE_PORT || '22' }}`,
-> so you only need to set it if your server uses a non-standard SSH port.
+> These secrets are no longer used by any active workflow. Keep them (or clean
+> them up) only for as long as the Linode server itself is kept around for
+> rollback.
 
 ## Why no other secrets are required
 
-- **No registry/build secrets** — the app builds from public source on the CI
-  runner; nothing is pulled from a private package registry.
-- **No cloud-provider secrets** — we deploy over plain SSH to Linode. We do **not**
-  use Cloudflare Pages/API tokens, AWS, S3, or CloudFront.
+- **No registry/build secrets** — the app builds from public source; nothing is
+  pulled from a private package registry.
+- **Vercel needs no GitHub Secrets** — the Vercel Git integration authenticates
+  and deploys independently of this repo's GitHub Actions/Secrets.
 - **Application secrets are NOT GitHub Secrets** — runtime config (DB URLs, API
-  keys, etc.) lives in the server file `"$LINODE_DEPLOY_PATH/shared/.env"`
-  (chmod 600, owned by the deploy user) and is symlinked into each release. Keep
-  them off GitHub so a repo compromise can't leak production credentials.
+  keys, etc.), if any, does not live in GitHub Secrets.
 
-## Optional hardening secret
+## Optional hardening secret (legacy)
 
 | Secret | Purpose |
 | ------ | ------- |
-| `LINODE_KNOWN_HOSTS` | Pin the server's SSH host key instead of trusting `ssh-keyscan` at deploy time. If you set it, replace the `ssh-keyscan` step in `deploy.yml` with `printf '%s\n' "${{ secrets.LINODE_KNOWN_HOSTS }}" > ~/.ssh/known_hosts`. Prevents a man-in-the-middle on first connection. |
+| `LINODE_KNOWN_HOSTS` | Pinned the server's SSH host key instead of trusting `ssh-keyscan` at deploy time, for the retired Linode deploy workflow. No longer applicable since that workflow was removed. |
 
 Get the value with: `ssh-keyscan -p <port> <host>`.
 
-## Generating the deploy SSH key
+## Generating the deploy SSH key (legacy)
 
 On any machine (do this once):
 

@@ -47,8 +47,9 @@ and **must** remove it immediately after.
 
 - **Review PRs:** check CI is green, code is sound, conversations resolved, then
   approve and **Squash and merge** (keeps `main` history clean).
-- **Watch the deploy:** merging triggers *Deploy to Production*. Confirm it goes
-  green and https://start.cacadets.org / `/healthz` are up.
+- **Watch the deploy:** merging triggers a **Vercel** production deploy.
+  Confirm it reaches *Ready* in the Vercel dashboard and
+  https://start.cacadets.org shows your change.
 - **If a deploy fails:** follow [ROLLBACK.md](./ROLLBACK.md), then open an issue
   and fix forward via PR.
 - **Triage** issues and Discussions; label and respond.
