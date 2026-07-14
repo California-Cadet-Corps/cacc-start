@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #
+# RETIRED: Linode legacy, kept for rollback reference only. Production is Vercel.
+#
 # One-time Linode provisioning for start.cacadets.org.
 # Run as root (or with sudo) on a fresh Ubuntu 22.04/24.04 server.
 # Review every line before running — this is a guide, not a turnkey installer.

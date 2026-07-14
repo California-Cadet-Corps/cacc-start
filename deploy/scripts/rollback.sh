@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #
+# RETIRED: Linode legacy, kept for rollback reference only. Production is Vercel.
+#
 # Roll back start.cacadets.org to the previous (or a specific) release.
 # Run ON THE SERVER as the deploy user:
 #
