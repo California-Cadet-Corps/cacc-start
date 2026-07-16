@@ -51,7 +51,7 @@ jobs:
         run: |
           git -c user.name='aroach98' \
               -c user.email='231776248+aroach98@users.noreply.github.com' \
-              commit --amend --no-edit --reset-author
+              commit --amend --no-edit --reset-author --allow-empty
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
