@@ -26,6 +26,14 @@ jobs:
       VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       REAL_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      # Pinned on purpose -- do not float this back to `latest`. Every run used to
+      # install whatever Vercel had published that morning, which made an upstream
+      # release able to break production deploys in every CACC repo at once, with no
+      # commit involved: 56.3.0 (published 2026-07-16 21:51Z) stopped noticing that a
+      # build had finished and failed every deploy with "Error: fetch failed" until
+      # 56.3.1 landed ~3h later. Bump this deliberately, in a PR, so the preview build
+      # proves the new version works before main depends on it.
+      VERCEL_CLI_VERSION: '56.3.1'
     steps:
       # Without an explicit project id the Vercel CLI does not fail -- it CREATES a
       # new project and deploys there, silently. Fail loudly instead.
@@ -42,19 +50,30 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 2
 
-      # Vercel refuses to deploy a commit whose author lacks a paid seat on the team,
-      # and enforces this even for token-authenticated CLI deploys. Re-authoring HEAD
-      # inside the runner clears the check. This rewrites the commit in the ephemeral
-      # checkout only -- the real repository history is never touched or pushed.
+      # Vercel refuses to deploy a commit whose author lacks team access, and enforces
+      # this even for token-authenticated CLI deploys. Re-authoring HEAD inside the
+      # runner clears the check. This rewrites the commit in the ephemeral checkout
+      # only -- the real repository history is never touched or pushed, so contributors
+      # keep authorship of their own commits.
       # Side effect: the SHA changes, so the true commit is passed as --meta gitSha.
+      #
+      # The email MUST be one Vercel can resolve to a member of the team. Use the owner
+      # account's own Vercel email -- NOT aroach98's github.com noreply address, which
+      # looks like the "safer" choice and is what we use for real commits, but which
+      # Vercel can only map to a member while that GitHub account stays linked to the
+      # Vercel account. Vercel allows one GitHub link per account, so the day that link
+      # moves, every CACC production deploy blocks with TEAM_ACCESS_REQUIRED and no
+      # commit caused it. The owner's email needs no link. (Lived through 2026-07-17.)
+      # Previews are not seat-checked, so this fails ONLY on main -- a green PR proves
+      # nothing about it.
       - name: Re-author HEAD for Vercel's git-author check
         run: |
           git -c user.name='aroach98' \
-              -c user.email='231776248+aroach98@users.noreply.github.com' \
+              -c user.email='andrew.roach@cacadets.org' \
               commit --amend --no-edit --reset-author --allow-empty
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global "vercel@$VERCEL_CLI_VERSION"
 
       - name: Deploy
         id: deploy
@@ -64,9 +83,62 @@ jobs:
           if [ "${{ github.event_name }}" = "push" ]; then
             args="$args --prod"
           fi
-          url=$(vercel deploy $args)
+          # --no-wait returns as soon as the deployment exists, instead of holding one
+          # HTTP connection open for the whole build. That connection used to BE the
+          # verdict: when it dropped, a healthy build that went live anyway was
+          # reported as a failed deploy. The wait moves to the step below, which asks
+          # Vercel what actually happened.
+          url=$(vercel deploy $args --no-wait)
           echo "url=$url" >> "$GITHUB_OUTPUT"
-          echo "Deployed: $url"
+          echo "Created deployment: $url"
+
+      # The build runs on Vercel whether or not this runner is watching, so the job's
+      # verdict must come from the deployment's real state -- never from the health of
+      # our connection to it. Losing the API for a moment is retried; only Vercel
+      # saying ERROR/CANCELED fails the deploy.
+      - name: Wait for the build and report its real state
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -uo pipefail
+          host="${URL#https://}"
+          deadline=$(( SECONDS + 1200 ))
+          misses=0
+          state=""
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            body=$(curl -sS --max-time 30 \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              "https://api.vercel.com/v13/deployments/$host?teamId=$VERCEL_ORG_ID") || body=""
+            state=$(printf '%s' "$body" | jq -r '.readyState // empty' 2>/dev/null)
+
+            if [ -z "$state" ]; then
+              misses=$(( misses + 1 ))
+              if [ "$misses" -ge 20 ]; then
+                echo "::error::Could not read the deployment state from the Vercel API"
+                echo "::error::$misses times running. The build may well have succeeded --"
+                echo "::error::check $URL before re-running this."
+                exit 1
+              fi
+              sleep 10
+              continue
+            fi
+            misses=0
+
+            case "$state" in
+              READY)
+                echo "Deployment READY: $URL"
+                exit 0
+                ;;
+              ERROR|CANCELED)
+                echo "::error::Deployment $state. Build logs: $URL"
+                exit 1
+                ;;
+            esac
+            echo "  $state ..."
+            sleep 10
+          done
+          echo "::error::Still '$state' after 20 minutes: $URL"
+          exit 1
 
       - name: Comment preview URL on the PR
         if: github.event_name == 'pull_request'
