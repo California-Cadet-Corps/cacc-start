@@ -157,3 +157,18 @@ jobs:
             } else {
               await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
             }
+
+  # BEGIN:cacc-testing-notify (centrally managed — Proving Ground per-push regression.
+  # Edit in cacc-testing/docs/notify-testing-snippet.md, not here.)
+  notify-testing:
+    needs: deploy
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fire test-run dispatch to cacc-testing
+        env:
+          TOKEN: ${{ secrets.TESTING_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then echo "TESTING_DISPATCH_TOKEN unset - skipping"; exit 0; fi
+          curl -sf -X POST https://api.github.com/repos/California-Cadet-Corps/cacc-testing/dispatches             -H "Authorization: Bearer $TOKEN"             -H "Accept: application/vnd.github+json"             -H "X-GitHub-Api-Version: 2022-11-28"             -d "{\"event_type\":\"test-run\",\"client_payload\":{\"site\":\"start\",\"commit\":\"$GITHUB_SHA\",\"environment\":\"prod\"}}"             || echo "dispatch failed (non-blocking)"
+  # END:cacc-testing-notify
