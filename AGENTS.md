@@ -16,11 +16,26 @@ Entra app**), read the org-wide source of truth:
   - Browse: https://github.com/California-Cadet-Corps/.github/blob/main/ARCHITECTURE.md
 
 **⛔ Hard rules (always apply, no exceptions without recording a decision in `ARCHITECTURE.md`):**
+- **Scope discipline: a fix or feature touches only what the task requires — never a
+  drive-by rewrite.** Land the smallest correct change that satisfies the task; don't
+  refactor, rename, restyle, or "clean up" surrounding code in the same change unless it
+  was explicitly asked for. Notice something else broken or messy while you're in there?
+  Say so and let the human decide if it's in scope — don't fold it into the current diff.
+  Before pushing, re-read the diff line-by-line and cut anything that isn't in service of
+  the actual ask. (Adopted 2026-08-16 — the recurring failure mode this closes: asked to
+  fix one thing, an agent rewrites a whole module/page/flow along the way and ships new
+  bugs the task never asked for, turning every fix into another round of fixes.)
 - **Object storage = Supabase Storage** in the shared project. **Never create a new Linode Object
   Storage / S3 bucket** or add new `@aws-sdk/client-s3` paths — use a private Supabase bucket with
   signed URLs (`cacc-tools-2.0` is the reference). Migration: `.github/docs/object-storage-migration.md`.
 - **One shared Supabase project + one shared Entra sign-in app** — don't stand up a new Supabase
   project or per-app sign-in registration for target-stack work.
+- **No horizontal scrolling — ever, on any viewport (mobile or desktop).** A surface that would
+  overflow sideways must restructure, not scroll: wide tables become stacked/wrapping row layouts,
+  chip/label groups wrap, long single atoms (filenames) truncate with ellipsis. `overflow-x: auto`
+  wrappers around tables are a design bug, not a fallback — never add one, and remove one whenever
+  touching a page that has it. (Product-owner ruling 2026-08-07; cacc-hq's State Warehouse stock
+  book + Service Records roster are the reference conversions.)
 - **Push to `main` freely when the app has a staging environment.** On any repo using the
   manual-promotion pattern (`autoAssignCustomDomains=OFF` — a `main` push only *stages* the build
   and does **not** touch the production domain), an agent is **always allowed to push to `main`
@@ -58,6 +73,37 @@ Entra app**), read the org-wide source of truth:
   `cacc-identity/supabase/migrations/`, applied via `q.mjs` (Node + `pg`) or the Supabase
   Management API; new tables ship with RLS; PII is safety-critical. It's one shared Supabase
   project, so a migration lands for every app — get it right, but don't wait for a go-ahead.
+- **Keep testing.cacadets.org current when you change behavior.** `cacc-testing`'s
+  `check-staleness.mjs` auto-heals *structural* drift on its own — a route/API added,
+  removed, or re-gated fires a regenerate → PR → **auto-merge**, no action needed. It does
+  **not** catch *behavioral* drift: changing what an **existing** route/API already does (a
+  redirect target, a gated-vs-open decision, a validation rule, a persona's expected
+  outcome, copy a test asserts on) never touches the route/policy diff that script watches,
+  so the generated suite keeps asserting the **old** behavior and can read GREEN
+  indefinitely. If your change alters behavior a `cacc-testing` suite already encodes an
+  expectation for, update it (`generator/route-maps/<site>.json` or
+  `generator/site-programs.mjs`, or trigger `generate-suite.yml` `workflow_dispatch` to
+  regenerate) in the **same unit of work**. A suite that silently tests stale behavior is
+  worse than no suite.
+- **Standard way to SHOW a person, anywhere = `"RANK First Last"`.** E.g. the raw Entra display
+  name `"Andrew Roach, CPT, CACC"` renders as **`"CPT Andrew Roach"`** — never the raw Entra
+  string, a bare email, or a `"Last, First"` ordering. Applies to every list, table, header,
+  PDF/certificate, and email that names a person: adults with a recognized rank on file get the
+  prefix; cadets and anyone with no rank just show `"First Last"`; someone with no display name at
+  all falls back to a title-cased name derived from their email's local part, never the bare
+  address. Reference implementation: `cacc-campus/src/lib/lms/format.ts` (`formatPersonName` for
+  display, `personSortKey` for a last-name-first sort key the rank prefix can't scramble) — port
+  these two functions into an app rather than inventing another name-formatting scheme. (Adopted
+  2026-08-26.)
+- **Times display local, never raw UTC.** No user-facing timestamp on any CACC site (or the emails,
+  PDFs, and exports it generates) may show as a bare UTC / ISO / `Z`-suffixed string. **Store and send
+  UTC** (`timestamptz`), but at the display boundary render in the **viewer's own local timezone**
+  (`Intl.DateTimeFormat`/`toLocaleString` with **no hard-coded `timeZone`**). When there's no browser
+  to localize to (SSR absolute times, emails, PDFs, cron/report output), render in
+  **`America/Los_Angeles`** and **label the zone** (e.g. `… 3:00 PM PT`) — Pacific is the house
+  timezone and a labeled Pacific time is the required fallback. ⚠ **Next.js:** formatting a `Date` on
+  the server and again on the client in different zones is a **hydration mismatch** — format on the
+  client, or send a pre-formatted, zone-labeled string. (Display rule only; DB/audit values stay UTC.)
 
 `ARCHITECTURE.md` is authoritative for: every repo and what it does, the shared identity
 backbone (one Supabase project + Microsoft/Entra SSO), where each app is hosted (Vercel
