@@ -6,7 +6,6 @@ name: Vercel Deploy
 # the commit author. See agent-context/cacc-system-context.md in the .github repo.
 
 on:
-  pull_request:
   push:
     branches: [main]
 
